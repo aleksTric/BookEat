@@ -51,7 +51,8 @@ git pull
 git checkout -b <branch_name>
 
 # < Δουλειά >
-git commit
+git add .
+git commit -m "Type your message here"
 git push
 
 # Έτοιμος να ενώσω με το MAIN branch
