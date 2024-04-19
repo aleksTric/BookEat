@@ -56,6 +56,7 @@ git commit -m "Type your message here"
 git push
 
 # Έτοιμος να ενώσω με το MAIN branch
-git rebase -i origin/main
+git checkout main
+git merge <branch_name>
 git push -f
 ```
