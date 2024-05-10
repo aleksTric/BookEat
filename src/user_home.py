@@ -64,20 +64,271 @@ def relative_to_assets(path: str) -> Path:
 def open_book_details():
     # Open book details page using subprocess
     subprocess.Popen(["python3", "book_details_page.py"])
-
 def display_home_content():
+   
     print("Home content displayed")
     toggle_button_image(button_1)
     delete_elements_greater_than_x(220.0)
-    # Add your new content for the Friends page
+   
+   
+
     canvas.create_text(
-        250.0,
-        100,
-        anchor="nw",
-        text="Home Page",
-        fill="#333333",
-        font=("Inter Bold", 25)
+    304.0,
+    95.0,
+    anchor="nw",
+    text="Recently Added",
+    fill="#333333",
+    font=("Inter Bold", 25 * -1),
+    tags="red_rectangle"
     )
+
+    canvas.create_text(
+        292.0,
+        279.0,
+        anchor="nw",
+        text="Recommended",
+        fill="#333333",
+        font=("Inter Bold", 25 * -1),
+        tags="red_rectangle"
+    )
+    canvas.create_text(
+        308.0,
+        442.0,
+        anchor="nw",
+        text="Announcements",
+        fill="#333333",
+        font=("Jura SemiBold", 25 * -1)
+    )
+    canvas.create_rectangle(
+    297.0,
+    143.0,
+    1250.0,
+    254.0,
+    fill="#FFFFFF",
+    outline="",
+    tags="red_rectangle")
+
+    canvas.create_rectangle(
+        296.0,
+        330.0,
+        1249.0,
+        434.0,
+        fill="#FFFFFF",
+        outline="",
+        tags="red_rectangle")
+
+    canvas.create_rectangle(
+        297.0,
+        489.0,
+        1250.0,
+        760.0,
+        fill="#FFFFFF",
+        outline="",
+        tags="red_rectangle")
+
+
+    canvas.create_rectangle(
+        1085.0,
+        13.0,
+        1445.0,
+        113.0,
+        fill="#FFFFFF",
+        outline="",
+        tags="red_rectangle")
+    
+    
+    entry_1 = Entry(
+    bd=0,
+    bg="#FFFFFF",
+    fg="#000716",
+    highlightthickness=0
+    )
+    entry_1.place(
+        x=487.0,
+        y=21.0,
+        width=202.0,
+        height=52.0
+    )
+
+    canvas.create_rectangle(
+        330.0,
+        162.0,
+        408.0,
+        235.0,
+        fill="#D9D9D9",
+        outline="")
+
+    canvas.create_rectangle(
+        330.0,
+        346.0,
+        408.0,
+        419.0,
+        fill="#D9D9D9",
+        outline="")
+
+    canvas.create_rectangle(
+        331.0,
+        505.0,
+        588.0,
+        764.0,
+        fill="#D9D9D9",
+        outline="")
+
+    canvas.create_rectangle(
+        643.0,
+        505.0,
+        900.0,
+        764.0,
+        fill="#D9D9D9",
+        outline="")
+
+    canvas.create_rectangle(
+        955.0,
+        504.0,
+        1212.0,
+        763.0,
+        fill="#D9D9D9",
+        outline="")
+
+    canvas.create_rectangle(
+        662.0,
+        162.0,
+        740.0,
+        235.0,
+        fill="#D9D9D9",
+        outline="")
+
+    canvas.create_rectangle(
+        662.0,
+        346.0,
+        740.0,
+        419.0,
+        fill="#D9D9D9",
+        outline="")
+
+    canvas.create_rectangle(
+        978.0,
+        162.0,
+        1056.0,
+        235.0,
+        fill="#D9D9D9",
+        outline="")
+
+    canvas.create_rectangle(
+        978.0,
+        346.0,
+        1056.0,
+        419.0,
+        fill="#D9D9D9",
+        outline="")
+
+    canvas.create_rectangle(
+        496.0,
+        162.0,
+        574.0,
+        235.0,
+        fill="#D9D9D9",
+        outline="")
+
+    canvas.create_rectangle(
+        496.0,
+        346.0,
+        574.0,
+        419.0,
+        fill="#D9D9D9",
+        outline="")
+
+    canvas.create_rectangle(
+        828.0,
+        162.0,
+        906.0,
+        235.0,
+        fill="#D9D9D9",
+        outline="")
+
+    canvas.create_rectangle(
+        828.0,
+        346.0,
+        906.0,
+        419.0,
+        fill="#D9D9D9",
+        outline="")
+
+    canvas.create_rectangle(
+        1118.0,
+        162.0,
+        1196.0,
+        235.0,
+        fill="#D9D9D9",
+        outline="")
+
+    canvas.create_rectangle(
+        1118.0,
+        346.0,
+        1196.0,
+        419.0,
+        fill="#D9D9D9",
+        outline="")
+
+    entry_image_1 = PhotoImage(
+    file=relative_to_assets("entry_1.png"))
+    entry_bg_1 = canvas.create_image(
+    588.0,
+    48.0,
+    image=entry_image_1
+    )
+
+    canvas.create_text(
+        533.0,
+        30.0,
+        anchor="nw",
+        text="Search...",
+        fill="#000000",
+        font=("Inter Medium", 25 * -1)
+    )
+
+    canvas.create_text(
+        1178.0,
+        18.0,
+        anchor="nw",
+        text="Kostas",
+        fill="#000000",
+        font=("Inter SemiBold", 25 * -1)
+    )
+
+    canvas.create_rectangle(
+        1349.0,
+        21.0,
+        1436.0,
+        100.0,
+        fill="#000000",
+        outline="")
+
+    
+
+    canvas.create_rectangle(
+        1116.0,
+        51.0,
+        1336.0,
+        61.0,
+        fill="#000000",
+        outline=""
+    )
+    entry_1 = Entry(
+    bd=0,
+    bg="#FFFFFF",
+    fg="#000716",
+    highlightthickness=0
+    )
+    entry_1.place(
+        x=487.0,
+        y=21.0,
+        width=202.0,
+        height=52.0
+    )
+    
+
+
 
 def display_friends_content():
     print("Friends content displayed")
@@ -176,47 +427,6 @@ canvas.create_rectangle(
     tags="red_rectangle"
 )
 
-
-canvas.create_text(
-    304.0,
-    95.0,
-    anchor="nw",
-    text="Recently Added",
-    fill="#333333",
-    font=("Inter Bold", 25 * -1),
-    tags="red_rectangle"
-)
-
-canvas.create_text(
-    292.0,
-    279.0,
-    anchor="nw",
-    text="Recommended",
-    fill="#333333",
-    font=("Inter Bold", 25 * -1),
-    tags="red_rectangle"
-)
-
-canvas.create_text(
-    304.0,
-    445.0,
-    anchor="nw",
-    text="Announcements",
-    fill="#333333",
-    font=("Inter Bold", 25 * -1),
-    tags="red_rectangle"
-)
-
-canvas.create_text(
-    304.0,
-    614.0,
-    anchor="nw",
-    text="All books",
-    fill="#333333",
-    font=("Inter Bold", 25 * -1),
-    tags="red_rectangle"
-)
-
 canvas.create_rectangle(
     0.0,
     0.0,
@@ -225,70 +435,10 @@ canvas.create_rectangle(
     fill="#7B3BE3",
     outline="")
 
-canvas.create_rectangle(
-    297.0,
-    143.0,
-    1250.0,
-    254.0,
-    fill="#FFFFFF",
-    outline="",
-    tags="red_rectangle")
 
-canvas.create_rectangle(
-    296.0,
-    330.0,
-    1249.0,
-    434.0,
-    fill="#FFFFFF",
-    outline="",
-    tags="red_rectangle")
 
-canvas.create_rectangle(
-    297.0,
-    489.0,
-    1250.0,
-    593.0,
-    fill="#FFFFFF",
-    outline="",
-    tags="red_rectangle")
 
-canvas.create_rectangle(
-    297.0,
-    656.0,
-    1250.0,
-    760.0,
-    fill="#FFFFFF",
-    outline="",
-    tags="red_rectangle")
 
-canvas.create_rectangle(
-    1085.0,
-    13.0,
-    1445.0,
-    113.0,
-    fill="#FFFFFF",
-    outline="",
-    tags="red_rectangle")
-
-entry_image_1 = PhotoImage(
-    file=relative_to_assets("entry_1.png"))
-entry_bg_1 = canvas.create_image(
-    588.0,
-    48.0,
-    image=entry_image_1
-)
-entry_1 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    fg="#000716",
-    highlightthickness=0
-)
-entry_1.place(
-    x=487.0,
-    y=21.0,
-    width=202.0,
-    height=52.0
-)
 
 button_image_1 = PhotoImage(
     file=relative_to_assets("home_white.png"))
@@ -306,20 +456,7 @@ button_1.place(
     height=52.0
 )
 
-button_image_2 = PhotoImage(
-    file=relative_to_assets("button_2.png"))
-button_2 = Button(
-    image=button_image_2,
-    borderwidth=0,
-    highlightthickness=0,
-    relief="flat"
-)
-button_2.place(
-    x=1126.0,
-    y=599.0,
-    width=170.0,
-    height=52.0
-)
+
 
 button_image_3 = PhotoImage(
     file=relative_to_assets("friends_normal.png"))
@@ -384,18 +521,15 @@ button_6.place(
     width=170.0,
     height=52.0
 )
+button_image_8 = PhotoImage(file=relative_to_assets("button_8.png"))
 
-
-
-button_image_8 = PhotoImage(
-    file=relative_to_assets("button_8.png"))
 button_8 = Button(
     image=button_image_8,
     borderwidth=0,
     highlightthickness=0,
     command=logout,
     relief="flat"
-)
+    )
 button_8.place(
     x=1.0,
     y=606.0,
@@ -403,240 +537,15 @@ button_8.place(
     height=45.0
 )
 
-canvas.create_rectangle(
-    330.0,
-    162.0,
-    408.0,
-    235.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    330.0,
-    346.0,
-    408.0,
-    419.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    331.0,
-    505.0,
-    409.0,
-    578.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    331.0,
-    663.0,
-    409.0,
-    736.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    662.0,
-    162.0,
-    740.0,
-    235.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    662.0,
-    346.0,
-    740.0,
-    419.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    663.0,
-    505.0,
-    741.0,
-    578.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    663.0,
-    663.0,
-    741.0,
-    736.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    978.0,
-    162.0,
-    1056.0,
-    235.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    978.0,
-    346.0,
-    1056.0,
-    419.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    979.0,
-    505.0,
-    1057.0,
-    578.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    979.0,
-    663.0,
-    1057.0,
-    736.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    496.0,
-    162.0,
-    574.0,
-    235.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    496.0,
-    346.0,
-    574.0,
-    419.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    497.0,
-    505.0,
-    575.0,
-    578.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    497.0,
-    663.0,
-    575.0,
-    736.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    828.0,
-    162.0,
-    906.0,
-    235.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    828.0,
-    346.0,
-    906.0,
-    419.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    829.0,
-    505.0,
-    907.0,
-    578.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    829.0,
-    663.0,
-    907.0,
-    736.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    1118.0,
-    162.0,
-    1196.0,
-    235.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    1118.0,
-    346.0,
-    1196.0,
-    419.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    1119.0,
-    505.0,
-    1197.0,
-    578.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    1119.0,
-    663.0,
-    1197.0,
-    736.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_text(
-    533.0,
-    30.0,
-    anchor="nw",
-    text="Search...",
-    fill="#000000",
-    font=("Inter Medium", 25 * -1)
-)
-
-canvas.create_text(
-    1178.0,
-    18.0,
-    anchor="nw",
-    text="Kostas",
-    fill="#000000",
-    font=("Inter SemiBold", 25 * -1)
-)
-
-canvas.create_rectangle(
-    1349.0,
-    21.0,
-    1436.0,
-    100.0,
-    fill="#000000",
-    outline="")
-
-image_image_1 = PhotoImage(
-    file=relative_to_assets("image_1.png"))
+image_image_1 = PhotoImage( file=relative_to_assets("image_1.png"))
+    
 image_1 = canvas.create_image(
     81.0,
     72.0,
     image=image_image_1
 )
 
-canvas.create_rectangle(
-    1116.0,
-    51.0,
-    1336.0,
-    61.0,
-    fill="#000000",
-    outline=""
-)
+
 # Dictionary to store button images and their corresponding alternate images
 button_images = {
     button_1: {"normal": PhotoImage(file=relative_to_assets("home_normal.png")), "white": PhotoImage(file=relative_to_assets("home_white.png"))},
@@ -658,15 +567,7 @@ def toggle_button_image(button):
             btn.config(image=button_images[btn]["normal"])
 
 
-# Add a clickable book icon to the "Recommended" rectangle section
-book_icon = PhotoImage(file=relative_to_assets("book-pixel-art.png"))
-# Define the desired button size
-button_width = 80
-button_height = 80
 
-# Create the button with the resized image
-book_button = Button(window, image=book_icon, borderwidth=0, highlightthickness=0, command=open_book_details)
-book_button.place(x=330.0, y=162.0, width=button_width, height=button_height)
-
+button_1.invoke()
 window.resizable(False, False)
 window.mainloop()
