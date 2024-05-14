@@ -26,7 +26,7 @@ We decided to develop a (borrowing) library system in python, that aims to bring
 
 | Full Name                 | ID      | Email                   | Github                                        |
 | ------------------------- | ------- | ----------------------- | --------------------------------------------- |
-| Alexandra Tricha          | 1072486 | ac1072486@ac.upatras.gr | [Link](https://github.com/aleksTric)          |
+| Panagiota Alexandra Tricha| 1072486 | ac1072486@ac.upatras.gr | [Link](https://github.com/aleksTric)          |
 | Dimitris Mparoutis        | 1084549 | ac1084549@ac.upatras.gr | [Link](https://github.com/jimbaroutis)        |
 | Konstantinos Tsiligiannis | 1084642 | ac1084642@ac.upatras.gr | [Link](https://github.com/KostasTsiligiannis) |
 | Kostantinos Kaplanis      | 1080447 | ac1080447@ac.upatras.gr | [Link](https://github.com/kostaskaplanis2001) |
