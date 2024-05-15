@@ -73,11 +73,11 @@ def open_welcome_window(username, user_type):
 
 def open_user_home():
     window.destroy()  # Close the current window
-    subprocess.Popen(["python3", "user_home.py"])
+    subprocess.Popen(["python3", "user_menu.py"])
 
 def open_admin_home():
     window.destroy()  # Close the current window
-    subprocess.Popen(["python3", "admin_home.py"])
+    subprocess.Popen(["python3", "admin_menu.py"])
 
 def user_exists_in_database(username):
     # Check if the provided username and password match the default user credentials
