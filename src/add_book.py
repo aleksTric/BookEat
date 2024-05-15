@@ -4,7 +4,7 @@ from admin import Admin
 import tkinter.messagebox
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"C:\lessons\BookEat\src\assets\add_book\frame0")
+ASSETS_PATH = OUTPUT_PATH / Path(r"C:\lessons\BookEat\src\assets\frame0")
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
