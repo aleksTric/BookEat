@@ -4,11 +4,23 @@ from categories import Categories
 
 class Books(Categories):
     def __init__(self, title, category, author, date):
-        self.title = title
-        self.category = category
-        self.author = author
-        self.date = date
+        self.__title = title
+        self.__category = category
+        self.__author = author
+        self.__date = date
 
+    def  get_title(self):
+         return self.__title
+    
+    def  get_categ(self):
+         return self.__category
+    
+    def get_author(self):
+         return self.__author
+
+    def get_date(self):
+         return self.__date
+    
     def get_book(title):
         # Establish a connection to the MySQL database
         

@@ -9,13 +9,24 @@ class Book_Form(Books):
       pass
 
     def check_book(self,title,category,author,date):
-      book_exists =Books.get_book(title)
-      if book_exists:
+      book_obj = Books(title,category,author,date)
+      title =book_obj.get_title()
+      category =book_obj.get_categ()
+      author =book_obj.get_author()
+      date=book_obj.get_date()
+
+      
+      if Books.get_book(title):
          tkinter.messagebox.showerror("Error", "the book already exists")
       else:
-         self.insert_book(title,category,author,date)
-
-    def insert_book(self,title,category,author,date):
+           if Categories.get_category_id(category) :
+            id = Categories.get_category_id(category)
+            print(id)
+            self.insert_book(title,id,author,date)
+           else:
+            tkinter.messagebox.showerror("Error", "the category doesnt exist") 
+    
+    def insert_book(self,title,category_id,author,date):
       try: 
         
           conn = mysql.connector.connect(
@@ -28,8 +39,8 @@ class Book_Form(Books):
           cursor = conn.cursor()
       
           sql = "INSERT INTO books (title, cat_id, author, date) VALUES (%s, %s, %s, %s)"
-          cursor.execute(sql, (title, category, author, date))
-          
+          cursor.execute(sql, (title, category_id, author, date))
+          conn.commit()
           
       except mysql.connector.Error as error:
             print("Failed to insert book:", error)   
@@ -44,8 +55,9 @@ class Book_Form(Books):
        pass
     
     def check_category(self,category):
-      categ_exists =Categories.get_category(category)
-      if categ_exists:
+      categ_obj = Categories(category)
+      category =categ_obj.get_category_name()
+      if Categories.get_category(category):
          tkinter.messagebox.showerror("Error", "the category already exists")
       else:
         

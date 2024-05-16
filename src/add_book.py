@@ -326,9 +326,7 @@ class MyApplication:
          category= self.entry_2.get()
          author=self.entry_1.get()
          date=self.entry_4.get()
-         print(category)
-         print(author)
-         print(date)
+         
          self.admin.add_book(title,category,author,date)
          self.entry_1.delete(0, tk.END)
          self.entry_2.delete(0, tk.END)
