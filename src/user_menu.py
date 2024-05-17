@@ -93,7 +93,7 @@ def display_study_rooms_content():
 def display_notifications_content():
     print("Notifications content displayed")
     toggle_button_image(button_6)
-    subprocess.Popen(["python3", "notifications_page.py"])
+    subprocess.Popen(["python3", "user_notifications_page.py"])
 
 
 def display_announcements_content():
