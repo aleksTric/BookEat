@@ -2,6 +2,8 @@ import tkinter as tk
 from pathlib import Path
 from admin import Admin
 import tkinter.messagebox
+from tkinter import filedialog
+
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"C:\lessons\BookEat\src\assets\frame0")
@@ -40,7 +42,7 @@ class MyApplication:
             image=self.button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_1 clicked"),
+            command= self.upload_json,
             relief="flat"
         )
         self.button_1.place(x=173.0, y=157.0, width=324.0, height=44.0)
@@ -332,8 +334,12 @@ class MyApplication:
          self.entry_2.delete(0, tk.END)
          self.entry_3.delete(0, tk.END)
          self.entry_4.delete(0, tk.END)
-
-
+   
+    def upload_json(self):
+        file_path = filedialog.askopenfilename()
+        if file_path:
+            print("File selected:", file_path)
+            self.admin.upload_json(file_path)
 
 def main():
     root = tk.Tk()

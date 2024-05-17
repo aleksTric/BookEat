@@ -10,5 +10,5 @@ class Admin:
     def add_category(self,category):
      self.book_form.check_category(category)
 
-    def upload_json(self):
-      pass
+    def upload_json(self,path):
+      self.book_form.check_json(path)
