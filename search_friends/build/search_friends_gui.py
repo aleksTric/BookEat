@@ -33,23 +33,69 @@ def connect_to_database():
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
+def retrieve_data(text_item1,text_item2):
+    try:
+        conn = connect_to_database()
+        if conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT username FROM account")
+
+            rows = cursor.fetchall()
+
+            for i, row in enumerate(rows):
+                if i<3:
+                   canvas.itemconfig(text_item1[i], text=rows[i])
+                elif i>=3 and i<6:
+                   canvas.itemconfig(text_item2[i-3],text=rows[i])
+            
+            cursor.close()
+            conn.close()
+    except mysql.connector.Error as err:
+        messagebox.showerror("Error", f"Failed to retrieve data: {err}")
+
+
 def send_friend_req(conn):
     try:
         cursor=conn.cursor()
-        cursor.execute("SELECT user_id FROM account WHERE username=Alexandra")
+        cursor.execute("SELECT user_id FROM account WHERE username=aleks")
         sql = "INSERT INTO notifications VALUES ()"
         #cursor.execute(sql,data)
         conn.commit()
         messagebox.showinfo("Success","Data inserted successfully!")
     except mysql.connector.Error as err:
         messagebox.showerror("Error",f"Failed to insert data: {err}")
-    
-def search():
-    query=entry.get()
 
-    print("Searching for:",query)
+def on_key_release(event):
+    search_term = search_entry.get()
+    search(search_term, text_items_row1, text_items_row2)  
+ 
+def search(search_term, text_item1, text_item2):
+    try:
+        conn = connect_to_database()
+        if conn:
+            cursor = conn.cursor()
 
-#Here starts the execution
+            query = "SELECT username FROM account WHERE username LIKE %s"
+            cursor.execute(query, ('%' + search_term + '%',))
+            rows = cursor.fetchall()
+           
+            for i in range(3):
+                canvas.itemconfig(text_item1[i], text="")
+                canvas.itemconfig(text_item2[i], text="")
+            
+            for i,row in enumerate(rows):
+                if i<3:
+                    canvas.itemconfig(text_item1[i], text=rows[i])
+                elif i>=3 and i<6:
+                    canvas.itemconfig(text_item2[i-3], text=rows[i])
+        cursor.close()
+        conn.close()
+    except mysql.connector.Error as err:
+        messagebox.showerror("Error", f"Failed to retrieve data: {err}")
+
+
+
+#main application window
 window = tk.Tk()
 
 conn = connect_to_database()
@@ -59,11 +105,6 @@ window.configure(bg = "#FFFFFF")
 
 label = tk.Label(window, text="Search:")
 label.pack()
-
-entry = tk.Entry(window)
-entry.pack()
-
-entry.bind("<KeyRelease>", lambda event: search())
 
 canvas = Canvas(
     window,
@@ -124,13 +165,17 @@ entry_bg_1 = canvas.create_image(
     45.0,
     image=entry_image_1
 )
-entry_1 = Entry(
+search_entry = tk.Entry(
+    window,
     bd=0,
     bg="#FFFFFF",
     fg="#000716",
     highlightthickness=0
 )
-entry_1.place(
+search_entry.pack()
+search_entry.bind("<KeyRelease>", on_key_release)
+
+search_entry.place(
     x=484.0,
     y=18.0,
     width=202.0,
@@ -185,59 +230,33 @@ canvas.create_rectangle(
     fill="#D9D9D9",
     outline="")
 
-canvas.create_text(
-    253.0,
-    217.0,
-    anchor="nw",
-    text="Alexandra",
-    fill="#000000",
-    font=("Inter", 30 * -1)
-)
+#first row of friends in the main page
+text_items_row1 = []
+for i in range(3):
+    text_item = canvas.create_text(
+        300.0*(i+1),
+        210.0,
+        anchor="nw",
+        text="",
+        fill="#000000",
+        font=("Inter", 30 * -1)
+    )
+    text_items_row1.append(text_item)
 
-canvas.create_text(
-    571.0,
-    210.0,
-    anchor="nw",
-    text="Kostas",
-    fill="#000000",
-    font=("Inter", 30 * -1)
-)
+#second row of friends in the main page    
+text_items_row2 = []
+for i in range(3):
+    text_item = canvas.create_text(
+       300.0*(i+1),
+       489.0,
+       anchor="nw",
+       text="",
+       fill="#000000",
+       font=("Inter", 30 * -1)
+    )
+    text_items_row2.append(text_item)
 
-canvas.create_text(
-    874.0,
-    210.0,
-    anchor="nw",
-    text="Dimitris",
-    fill="#000000",
-    font=("Inter", 30 * -1)
-)
-
-canvas.create_text(
-    857.0,
-    489.0,
-    anchor="nw",
-    text="Username",
-    fill="#000000",
-    font=("Inter", 30 * -1)
-)
-
-canvas.create_text(
-    554.0,
-    495.0,
-    anchor="nw",
-    text="Username",
-    fill="#000000",
-    font=("Inter", 30 * -1)
-)
-
-canvas.create_text(
-    251.0,
-    493.0,
-    anchor="nw",
-    text="Username",
-    fill="#000000",
-    font=("Inter", 30 * -1)
-)
+retrieve_data(text_items_row1,text_items_row2)
 
 canvas.create_text(
     358.0,
@@ -303,7 +322,7 @@ button_3 = Button(
     image=button_image_3,
     borderwidth=0,
     highlightthickness=0,
-    command=send_friend_req(),
+    command=send_friend_req(conn),
     relief="flat"
 )
 button_3.place(
@@ -398,7 +417,7 @@ canvas.create_text(
 )
 
 canvas.create_text(
-    303.0,
+    300.0,
     566.0,
     anchor="nw",
     text="Add Friend",
