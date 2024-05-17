@@ -45,7 +45,7 @@ def relative_to_assets(path: str) -> Path:
 def display_home_content():
     print("Home content displayed")
     toggle_button_image(button_1)
-    subprocess.Popen(["python3", "user_home_page.py"])
+    subprocess.Popen(["python3", "static_user_home_page.py"])
 
     entry_image_1 = PhotoImage(file=relative_to_assets("entry_1.png"))
     entry_bg_1 = canvas.create_image(588.0, 48.0, image=entry_image_1)
