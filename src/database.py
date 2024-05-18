@@ -1,7 +1,8 @@
-import mysql.connector
+import mysql.connector # type: ignore
+from config import db_config
 
 class Database:
-    def __init__(self, config):
+    def __init__(self, config=db_config):
         self.config = config
         self.connection = None
         self.cursor = None
@@ -9,53 +10,44 @@ class Database:
 
     def connect_to_database(self):
         try:
-            # Attempt to connect to the database using the provided config
             self.connection = mysql.connector.connect(**self.config)
             print("Connected to the database!")
-
-            # Create a cursor object
             self.cursor = self.connection.cursor(dictionary=True)
-
-            # Set is_connected attribute to True
             self.is_connected = True
-
         except mysql.connector.Error as err:
-            # Handle errors
             print(f"Error connecting to MySQL: {err}")
             self.is_connected = False
 
     def close_connection(self):
         if self.is_connected:
-            # Close cursor and connection
             self.cursor.close()
             self.connection.close()
             print("Connection to the database closed.")
             self.is_connected = False
 
+    def query(self, query, params=None):
+        if not self.is_connected:
+            self.connect_to_database()
+        self.cursor.execute(query, params)
+        return self.cursor.fetchall()
+
+class Book_Details:
+    def __init__(self, database):
+        self.database = database
+
     def get_books(self):
         try:
-            if not self.is_connected:
-                self.connect_to_database()
-
             query = "SELECT books.*, categories.category_name FROM books JOIN categories ON books.cat_id = categories.category_id"
-            self.cursor.execute(query)
-            books = self.cursor.fetchall()
-
-            # Add default image path for books
+            books = self.database.query(query)
             for book in books:
                 book['image_path'] = 'assets/home/book-pixel-art.png'
-
             return books
-
         except mysql.connector.Error as err:
             print(f"Error fetching books from database: {err}")
             return []
 
     def get_book_details(self, book_id):
         try:
-            if not self.is_connected:
-                self.connect_to_database()
-
             query = """
             SELECT books.*, categories.category_name 
             FROM books 
@@ -63,67 +55,75 @@ class Database:
             ON books.cat_id = categories.category_id 
             WHERE book_id = %s
             """
-            self.cursor.execute(query, (book_id,))
-            book_details = self.cursor.fetchone()
-
-            return book_details
-
+            book_details = self.database.query(query, (book_id,))
+            return book_details[0] if book_details else None
         except mysql.connector.Error as err:
             print(f"Error fetching book details from database: {err}")
             return None
 
-
     def get_category_name(self, category_id):
         try:
-            if not self.is_connected:
-                self.connect_to_database()
-
             query = "SELECT category_name FROM categories WHERE category_id = %s"
-            self.cursor.execute(query, (category_id,))
-            category_name = self.cursor.fetchone()
-
+            category_name = self.database.query(query, (category_id,))
             if category_name:
-                return category_name[0]
+                return category_name[0]['category_name']
             else:
                 return None
-
         except mysql.connector.Error as err:
             print(f"Error fetching category name from database: {err}")
             return None
 
+    def isAvailable(self, book_id):
+        warehouse = Warehouse(self.database)
+        quantity = warehouse.check_stock(book_id)
+        return quantity > 0
 
-# Create a Database instance with the provided config
-config = {
-    'user': 'kostas',
-    'password': 'kostas1234',
-    'host': '127.0.0.1',
-    'unix_socket': '/Applications/MAMP/tmp/mysql/mysql.sock',
-    'database': 'bookeat',  # Use the correct database name here
-    'raise_on_warnings': True
-}
+    def check_quantity(self, book_id):
+        if self.isAvailable(book_id):
+            print("Book is available.")
+        else:
+            print("Book is not available.")
 
-db = Database(config)
+class Warehouse:
+    def __init__(self, database):
+        self.database = database
 
-# Connect to the database
-db.connect_to_database()
+    def check_stock(self, book_id):
+        try:
+            query = "SELECT quantity FROM warehouse WHERE id_book = %s"
+            result = self.database.query(query, (book_id,))
+            if result:
+                return result[0]['quantity']
+            else:
+                return 0
+        except mysql.connector.Error as err:
+            print(f"Error checking stock from database: {err}")
+            return 0
 
-# Check if connected
-if db.is_connected:
-    print("Connected to the database!")
-else:
-    print("Failed to connect to the database.")
+# Example usage
+if __name__ == "__main__":
+    db = Database()
+    db.connect_to_database()
 
-# Fetch books from the database
-books = db.get_books()
-print("Books from the database:")
-for book in books:
-    print(f"Title: {book['title']}")
-    print(f"Author: {book['author']}")
-    print(f"Date: {book['date']}")
-    print(f"Description: {book['description']}")
-    print(f"Category: {book['category_name']}")
-    print(f"Image Path: {book['image_path']}")
-    print()
+    if db.is_connected:
+        print("Connected to the database!")
 
-# Close the connection
-db.close_connection()
+    book_details = Book_Details(db)
+
+    # Fetch books from the database
+    books = book_details.get_books()
+    print("Books from the database:")
+    for book in books:
+        print(f"Title: {book['title']}")
+        print(f"Author: {book['author']}")
+        print(f"Date: {book['date']}")
+        print(f"Description: {book['description']}")
+        print(f"Category: {book['category_name']}")
+        print(f"Image Path: {book['image_path']}")
+        print()
+
+    # Check quantity of a specific book
+    book_id = 1  # Example book ID
+    book_details.check_quantity(book_id)
+
+    db.close_connection()
