@@ -1,3 +1,18 @@
+DROP DATABASE bookeat;
+CREATE DATABASE bookeat;
+USE bookeat;
+
+CREATE TABLE IF NOT EXISTS account (
+  user_id INT NOT NULL AUTO_INCREMENT,
+  email VARCHAR(45) NOT NULL,
+  username VARCHAR(60) NOT NULL,
+  password VARCHAR(45) NOT NULL,
+  user_type ENUM('admin', 'user') NOT NULL DEFAULT 'user',
+  PRIMARY KEY (user_id),
+  UNIQUE KEY email_UNIQUE (email)
+);
+
+
 
 CREATE TABLE IF NOT EXISTS categories (
   category_id INT NOT NULL AUTO_INCREMENT,
@@ -15,6 +30,30 @@ CREATE TABLE IF NOT EXISTS books (
     description TEXT,
     FOREIGN KEY (cat_id) REFERENCES categories(category_id)
 );
+
+CREATE TABLE IF NOT EXISTS warehouse (
+    base_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id_book INT,
+    quantity INT,
+    FOREIGN KEY (id_book) REFERENCES books(book_id)
+); 
+
+CREATE TABLE IF NOT EXISTS requested_books (
+  request_id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  request_content VARCHAR(100) NOT NULL,
+  request_date DATETIME NOT NULL,
+  book_id INT NOT NULL,
+  PRIMARY KEY (request_id),
+  KEY reqbooks_fk_user_id_idx (user_id),
+  KEY reqbooks_fk_book_id_idx (book_id),
+  CONSTRAINT reqbooks_fk_book_id FOREIGN KEY (book_id) REFERENCES books (book_id),
+  CONSTRAINT reqbooks_fk_user_id FOREIGN KEY (user_id) REFERENCES account (user_id)
+);
+
+-- Inserting sample users
+INSERT INTO account (email, username, password, user_type) VALUES ('user1@example.com', 'user1', 'user1', 'user');
+
 -- Inserting sample categories
 INSERT INTO categories (category_name ) VALUES ('Classic' );
 INSERT INTO categories (category_name ) VALUES ('Dystopian');
@@ -29,3 +68,11 @@ INSERT INTO books (title, cat_id, author, date, description) VALUES ('Pride and 
 INSERT INTO books (title, cat_id, author, date, description) VALUES ('The Great Gatsby', 4, 'F. Scott Fitzgerald', '1925-04-10', 'The Great Gatsby is a novel by American writer F. Scott Fitzgerald. Set in the Jazz Age on Long Island, the novel depicts narrator Nick Carraway\'s interactions with mysterious millionaire Jay Gatsby and Gatsby\'s obsession to reunite with his former lover, Daisy Buchanan.');
 INSERT INTO books (title, cat_id, author, date, description) VALUES ('To the Lighthouse', 5, 'Virginia Woolf', '1927-05-05', 'To the Lighthouse is a novel by Virginia Woolf. The novel centres on the Ramsay family and their visits to the Isle of Skye in Scotland between 1910 and 1920.');
 INSERT INTO books (title, cat_id, author, date, description) VALUES ('Moby-Dick', 6, 'Herman Melville', '1851-10-18', 'Moby-Dick; or, The Whale is an 1851 novel by American writer Herman Melville. The book is the sailor Ishmael\'s narrative of the obsessive quest of Ahab, captain of the whaling ship Pequod, for revenge on Moby Dick, the giant white sperm whale that on the ship\'s previous voyage bit off Ahab\'s leg at the knee.');
+
+-- Inserting sample data into the warehouse table
+INSERT INTO warehouse (id_book, quantity) VALUES ((SELECT book_id FROM books WHERE title = 'To Kill a Mockingbird' LIMIT 1), 20);
+INSERT INTO warehouse (id_book, quantity) VALUES ((SELECT book_id FROM books WHERE title = '1984' LIMIT 1), 15);
+INSERT INTO warehouse (id_book, quantity) VALUES ((SELECT book_id FROM books WHERE title = 'Pride and Prejudice' LIMIT 1), 30);
+INSERT INTO warehouse (id_book, quantity) VALUES ((SELECT book_id FROM books WHERE title = 'The Great Gatsby' LIMIT 1), 10);
+INSERT INTO warehouse (id_book, quantity) VALUES ((SELECT book_id FROM books WHERE title = 'To the Lighthouse' LIMIT 1), 5);
+INSERT INTO warehouse (id_book, quantity) VALUES ((SELECT book_id FROM books WHERE title = 'Moby-Dick' LIMIT 1), 25);
