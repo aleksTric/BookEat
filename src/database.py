@@ -1,4 +1,4 @@
-import mysql.connector # type: ignore
+import mysql.connector
 from config import db_config
 
 class Database:
@@ -31,13 +31,41 @@ class Database:
         self.cursor.execute(query, params)
         return self.cursor.fetchall()
 
+    def submit(self, query, params=None):
+        if not self.is_connected:
+            self.connect_to_database()
+        self.cursor.execute(query, params)
+        self.connection.commit()
+
+class Warehouse:
+    def __init__(self, database):
+        self.database = database
+
+    def check_stock(self, book_id):
+        try:
+            query = """
+            SELECT quantity FROM warehouse
+            WHERE id_book = %s
+            """
+            result = self.database.query(query, (book_id,))
+            if result:
+                return result[0]['quantity']
+            return 0  # If no result found, return 0 indicating no stock
+        except mysql.connector.Error as err:
+            print(f"Error checking stock in the warehouse: {err}")
+            return 0  # Return 0 by default in case of an error
+
 class Book_Details:
     def __init__(self, database):
         self.database = database
 
     def get_books(self):
         try:
-            query = "SELECT books.*, categories.category_name FROM books JOIN categories ON books.cat_id = categories.category_id"
+            query = """
+            SELECT books.*, categories.category_name 
+            FROM books 
+            JOIN categories ON books.cat_id = categories.category_id
+            """
             books = self.database.query(query)
             for book in books:
                 book['image_path'] = 'assets/home/book-pixel-art.png'
@@ -76,54 +104,24 @@ class Book_Details:
     def isAvailable(self, book_id):
         warehouse = Warehouse(self.database)
         quantity = warehouse.check_stock(book_id)
-        return quantity > 0
+        return quantity
 
-    def check_quantity(self, book_id):
-        if self.isAvailable(book_id):
-            print("Book is available.")
-        else:
-            print("Book is not available.")
-
-class Warehouse:
-    def __init__(self, database):
-        self.database = database
-
-    def check_stock(self, book_id):
+    def check_borrowed_books(self, book_id):
         try:
-            query = "SELECT quantity FROM warehouse WHERE id_book = %s"
+            query = """
+            SELECT quantity FROM warehouse
+            WHERE id_book = %s
+            """
             result = self.database.query(query, (book_id,))
             if result:
-                return result[0]['quantity']
-            else:
-                return 0
+                quantity = result[0]['quantity']
+                if quantity >= 5:
+                    return True  # Book is already borrowed 5 or more times
+            return False  # Book is available for borrowing
         except mysql.connector.Error as err:
-            print(f"Error checking stock from database: {err}")
-            return 0
+            print(f"Error checking borrowed books: {err}")
+            return True  # Return True by default in case of an error
 
-# Example usage
-if __name__ == "__main__":
-    db = Database()
-    db.connect_to_database()
 
-    if db.is_connected:
-        print("Connected to the database!")
 
-    book_details = Book_Details(db)
 
-    # Fetch books from the database
-    books = book_details.get_books()
-    print("Books from the database:")
-    for book in books:
-        print(f"Title: {book['title']}")
-        print(f"Author: {book['author']}")
-        print(f"Date: {book['date']}")
-        print(f"Description: {book['description']}")
-        print(f"Category: {book['category_name']}")
-        print(f"Image Path: {book['image_path']}")
-        print()
-
-    # Check quantity of a specific book
-    book_id = 1  # Example book ID
-    book_details.check_quantity(book_id)
-
-    db.close_connection()
