@@ -2,6 +2,11 @@ import tkinter as tk
 from tkcalendar import DateEntry  # type: ignore
 from database import Database, Book_Details
 from config import db_config
+from datetime import datetime
+import time
+import threading
+
+
 
 class BookFrame(tk.Frame):
     def __init__(self, master, book_data, *args, **kwargs):
@@ -112,23 +117,41 @@ class BookFrame(tk.Frame):
             quantity_spinbox.pack(pady=5)
             
             # Borrow Now button
-            borrow_button = tk.Button(book_window, text="Borrow Now!", font=("Helvetica", 16), command=lambda: self.submit_borrow_form(book_details, quantity_var.get()))
+            borrow_button = tk.Button(book_window, text="Borrow Now!", font=("Helvetica", 16), command=lambda: self.submit_borrow_form(book_details, quantity_var.get(), borrow_button))
             borrow_button.pack(pady=10)
 
-    def submit_borrow_form(self, book, quantity):
+    def submit_borrow_form(self, book, quantity, borrow_button):
         book_id = book['book_id']
-        query = "INSERT INTO requested_books (book_id, quantity) VALUES (%s, %s)"
-        params = (book_id, quantity)
+        user_id = 1  # Assuming a default user ID for demonstration
+        request_content = f"Request for {quantity} copies of '{book['title']}'"  # Request details
+        request_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        query = "INSERT INTO requested_books (user_id, request_content, request_date, book_id) VALUES (%s, %s, %s, %s)"
+        params = (user_id, request_content, request_date, book_id)
         self.db.submit(query, params)
         self.show_message(f"Successfully requested {quantity} copies of '{book['title']}'!")
+        # Disable the borrow button after successful request
+        borrow_button.config(state=tk.DISABLED)
+
+
+
 
     def show_message(self, message):
         success_window = tk.Toplevel(self.master)
         success_window.title("Success")
         success_window.configure(bg="#DADADA")
+
+        # Create a styled label for the message
         success_label = tk.Label(success_window, text=message, font=("Helvetica", 16), bg="#DADADA", fg="black")
         success_label.pack(pady=10)
-        success_window.geometry("300x100")  # Adjust the size of the message window
+
+        # Create a label for the tick symbol
+        tick_label = tk.Label(success_window, text="✔️", font=("Arial", 48), bg="#DADADA", fg="green")
+        tick_label.pack(pady=10)
+
+        # Destroy the success message after 5 seconds
+        threading.Timer(4, success_window.destroy).start()
+
+
        
 
 
