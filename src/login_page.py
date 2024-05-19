@@ -21,9 +21,16 @@ import math
 
 def open_welcome_window(username, user_type):
     welcome_window = Tk()
-    welcome_window.geometry("400x200")
     welcome_window.title("Welcome")
     welcome_window.config(bg="#7B3BE3")
+
+    # Calculate the position to center the window
+    window_position_x = welcome_window.winfo_screenwidth() // 2 - 200  # Half of window width (400 / 2)
+    window_position_y = welcome_window.winfo_screenheight() // 2 - 100  # Half of window height (200 / 2)
+
+    # Set the window geometry with the calculated position
+    welcome_window.geometry("400x200+{}+{}".format(window_position_x, window_position_y))
+
 
     # Create and pack the welcome label
     welcome_label = Label(welcome_window, text=f"Welcome, {username}!", font=("Inter Medium", 20), padx=20, pady=20, bg="#7B3BE3", fg="#FFFFFF")
@@ -128,9 +135,15 @@ def login_user():
 
 window = Tk()
 window.title("Login")
-window.geometry("754x701")
+# window.geometry("754x701")
 window.configure(bg="#FFFFFF")
 window.iconphoto(True, PhotoImage(file="./assets/login/bookeat_icon.png"))
+# Calculate the position to center the window
+window_position_x = window.winfo_screenwidth() // 2 - 377  # Half of window width (754 / 2)
+window_position_y = window.winfo_screenheight() // 2 - 351  # Half of window height (701 / 2)
+
+# Set the window geometry with the calculated position
+window.geometry("754x701+{}+{}".format(window_position_x, window_position_y))
 
 canvas = Canvas(
     window,

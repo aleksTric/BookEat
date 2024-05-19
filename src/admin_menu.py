@@ -8,7 +8,16 @@ ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/kostaskaplanis/Desktop/build/assets/ad
 def logout():
     confirm_window = Toplevel(window)
     confirm_window.title("Logout Confirmation")
-    confirm_window.geometry("500x500")
+    confirm_window.config(bg="#7B3BE3")
+    confirm_window.iconphoto(True, PhotoImage(file="./assets/login/bookeat_icon.png"))
+
+    # Calculate the position to center the window
+    window_position_x = confirm_window.winfo_screenwidth() // 2 - 250  # Half of window width (500 / 2)
+    window_position_y = confirm_window.winfo_screenheight() // 2 - 250  # Half of window height (500 / 2)
+
+    # Set the window geometry with the calculated position
+    confirm_window.geometry("500x500+{}+{}".format(window_position_x, window_position_y))
+
 
     # Calculate padding and font size for larger window
     text_padding = 30
@@ -111,6 +120,14 @@ window = Tk()
 window.title('Menu')
 window.geometry("500x800")  # Resize window
 window.configure(bg="#7B3BE3")  # Set background color to purple
+window.iconphoto(True, PhotoImage(file="./assets/login/bookeat_icon.png"))
+
+# Calculate the position to center the window
+window_position_x = window.winfo_screenwidth() // 2 - 250  # Half of window width (500 / 2)
+window_position_y = window.winfo_screenheight() // 2 - 400  # Half of window height (800 / 2)
+
+# Set the window geometry with the calculated position
+window.geometry("500x800+{}+{}".format(window_position_x, window_position_y))
 
 canvas = Canvas(
     window,

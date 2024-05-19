@@ -75,8 +75,17 @@ class BookFrame(tk.Frame):
     def view_book(self, book):
         book_window = tk.Toplevel(self.master)
         book_window.title(book['title'])
-        book_window.geometry("400x600")  # Adjust the size of the book details window
+        # book_window.geometry("400x600")  # Adjust the size of the book details window
         book_window.configure(bg="#DADADA")
+        book_window.iconphoto(True, tk.PhotoImage(file="./assets/login/bookeat_icon.png"))
+
+        # Calculate the position to center the window
+        window_position_x = self.master.winfo_screenwidth() // 2 - 200  # Half of window width (400 / 2)
+        window_position_y = self.master.winfo_screenheight() // 2 - 300  # Half of window height (600 / 2)
+
+        # Set the window geometry with the calculated position
+        book_window.geometry("400x600+{}+{}".format(window_position_x, window_position_y))
+
 
         book_id = book.get('book_id')
         book_details = self.book_details.get_book_details(book_id)
@@ -139,6 +148,13 @@ class BookFrame(tk.Frame):
         success_window = tk.Toplevel(self.master)
         success_window.title("Success")
         success_window.configure(bg="#DADADA")
+        # Calculate the position to center the window
+        window_position_x = self.master.winfo_screenwidth() // 2 - 200  # Half of window width (400 / 2)
+        window_position_y = self.master.winfo_screenheight() // 2 - 200  # Half of window height (400 / 2)
+
+        # Set the window geometry with the calculated position
+        success_window.geometry("400x200+{}+{}".format(window_position_x, window_position_y))
+
 
         # Create a styled label for the message
         success_label = tk.Label(success_window, text=message, font=("Helvetica", 16), bg="#DADADA", fg="black")
@@ -159,9 +175,16 @@ class BookFrame(tk.Frame):
 # Create main window
 root = tk.Tk()
 root.title("Book List")
-root.geometry("1232x856")  # Set the window size
+# root.geometry("1232x856")  # Set the window size
 root.configure(bg="#DADADA")  # Set the background color of the main window
+root.iconphoto(True, tk.PhotoImage(file="./assets/login/bookeat_icon.png"))
 
+# Calculate the position to center the window
+window_position_x = root.winfo_screenwidth() // 2 - 616  # Half of window width (1232 / 2)
+window_position_y = root.winfo_screenheight() // 2 - 428  # Half of window height (856 / 2)
+
+# Set the window geometry with the calculated position
+root.geometry("1232x856+{}+{}".format(window_position_x, window_position_y))
 # Create Database instance
 db = Database()
 db.connect_to_database()
