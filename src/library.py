@@ -1,5 +1,8 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage, Frame, Label, Scrollbar, VERTICAL, RIGHT, Y, LEFT, BOTH, NW
+from tkinter import ttk
+from admin import Admin
+
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"C:\lessons\BookEat\src\assets2\frame0")
@@ -9,7 +12,7 @@ def relative_to_assets(path: str) -> Path:
 
 def search():
     search_query = entry_1.get()
-    # Simulate search results
+    
     results = [
         {"title": "Book 1", "category": "Fiction", "author": "Author 1", "date": "2023-01-01", "quantity": 10},
         {"title": "Book 2", "category": "Non-Fiction", "author": "Author 2", "date": "2022-12-31", "quantity": 5},
@@ -35,12 +38,12 @@ def display_results(results):
             entry.insert(0, value)
             entry.pack(side=LEFT)
 
-            # Add entry widget to a list of dictionaries, where each dictionary contains entries for one record
+            
             if i >= len(entries):
                 entries.append({})
             entries[i][key] = entry
 
-        # Create "Update" button after all attributes
+        
         update_button = Button(item_frame, text="Update", command=lambda idx=i: update_item(idx))
         update_button.pack(side=LEFT, padx=10)
 
@@ -49,7 +52,21 @@ def update_item(idx):
     for key, entry in entries[idx].items():
         updated_values[key] = entry.get()
     print("Updated values for record", idx+1, ":", updated_values)
-    # Perform saving operation here for the record at index 'idx'
+    
+
+def display_categories():
+    categories = admin.search_bycateg()
+    global category_combobox
+    category_combobox = ttk.Combobox(window, values=categories, font=("Inter", 10))
+    category_combobox.set("All")  # Default value
+    category_combobox.place(
+        x=900.0,
+        y=21.0,
+        width=100.0,
+        height=37.0
+    )
+
+admin = Admin()
 
 
 window = Tk()
@@ -119,14 +136,17 @@ results_container = Frame(results_canvas, bg="#FFFFFF")
 results_canvas.create_window((0, 0), window=results_container, anchor=NW)
 
 def on_frame_configure(event):
-   if results_canvas.winfo_exists():  # Check if results_canvas exists
+   if results_canvas.winfo_exists():  
         results_canvas.configure(scrollregion=results_canvas.bbox("all"))
 
-# List to hold entry widgets
+
 entries = []
 
-# List to hold keys for search results
+
 search_keys = []
+
+display_categories()
+
 
 window.resizable(False, False)
 window.mainloop()

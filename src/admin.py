@@ -1,9 +1,11 @@
 from book_form import Book_Form
+from library_form import Library_Form
 
 class Admin:
     def __init__(self):
      self.book_form = Book_Form()
-     
+     self.library_form = Library_Form()
+
     def add_book(self,title,category,author,date):
      self.book_form.check_book(title,category,author,date)
     
@@ -12,3 +14,7 @@ class Admin:
 
     def upload_json(self,path):
       self.book_form.check_json(path)
+
+    def search_bycateg(self):
+       categories =self.library_form.get_categories()
+       return categories
