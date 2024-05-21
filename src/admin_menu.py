@@ -106,6 +106,7 @@ def display_study_rooms_content():
 def display_book_requests_content():
     print("Book Requests content displayed")
     toggle_button_image(button_6)
+    subprocess.Popen(["python3", "admin_book_requests_page.py"])
 
 def display_notifications_content():
     print("Notifications content displayed")

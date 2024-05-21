@@ -1,4 +1,4 @@
-import mysql.connector # type: ignore
+import mysql.connector  # type: ignore
 from config import db_config
 
 class Database:
@@ -54,6 +54,17 @@ class Warehouse:
         except mysql.connector.Error as err:
             print(f"Error checking stock in the warehouse: {err}")
             return 0  # Return 0 by default in case of an error
+
+    def remove_quantity(self, book_id, quantity):
+        try:
+            query = """
+            UPDATE warehouse
+            SET quantity = quantity - %s
+            WHERE id_book = %s
+            """
+            self.database.submit(query, (quantity, book_id))
+        except mysql.connector.Error as err:
+            print(f"Error removing quantity from warehouse: {err}")
 
 class Book_Details:
     def __init__(self, database):
@@ -122,6 +133,43 @@ class Book_Details:
             print(f"Error checking borrowed books: {err}")
             return True  # Return True by default in case of an error
 
+    def show_accept_message(self, request_id):
+        print(f"Request {request_id} has been accepted.")
 
+    def show_reject_message(self, request_id):
+        print(f"Request {request_id} has been rejected.")
 
+class Requested_Books:
+    def __init__(self, database):
+        self.database = database
+        self.warehouse = Warehouse(database)
 
+    def remove_quantity(self, book_id):
+        self.warehouse.remove_quantity(book_id, 1)
+        
+    def accept_borrow_req(self, request_id, book_id):
+        try:
+            # Remove the requested quantity from the warehouse
+            self.remove_quantity(book_id)
+
+            # Update the requested_books table to mark the request as accepted
+            query = "UPDATE requested_books SET status = 'accepted' WHERE request_id = %s"
+            self.database.submit(query, (request_id,))
+
+            # Show the accept message
+            book_details = Book_Details(self.database)
+            book_details.show_accept_message(request_id)
+        except mysql.connector.Error as err:
+            print(f"Error accepting borrow request: {err}")
+
+    def decline_borrow_req(self, request_id):
+        try:
+            # Update the requested_books table to mark the request as declined
+            query = "UPDATE requested_books SET status = 'declined' WHERE request_id = %s"
+            self.database.submit(query, (request_id,))
+
+            # Show the reject message
+            book_details = Book_Details(self.database)
+            book_details.show_reject_message(request_id)
+        except mysql.connector.Error as err:
+            print(f"Error declining borrow request: {err}")
