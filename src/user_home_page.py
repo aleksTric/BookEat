@@ -1,9 +1,8 @@
 import tkinter as tk
 from tkcalendar import DateEntry  # type: ignore
-from database import Database, Book_Details
+from classes import Database, Book_Details
 from config import db_config
 from datetime import datetime
-import time
 import threading
 
 
@@ -134,14 +133,12 @@ class BookFrame(tk.Frame):
         user_id = 1  # Assuming a default user ID for demonstration
         request_content = f"Request for {quantity} copies of '{book['title']}'"  # Request details
         request_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        query = "INSERT INTO requested_books (user_id, request_content, request_date, book_id) VALUES (%s, %s, %s, %s)"
-        params = (user_id, request_content, request_date, book_id)
+        query = "INSERT INTO requested_books (user_id, request_content, request_date, book_id, quantity) VALUES (%s, %s, %s, %s, %s)"
+        params = (user_id, request_content, request_date, book_id, quantity)
         self.db.submit(query, params)
         self.show_message(f"Successfully requested {quantity} copies of '{book['title']}'!")
         # Disable the borrow button after successful request
         borrow_button.config(state=tk.DISABLED)
-
-
 
 
     def show_message(self, message):

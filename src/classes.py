@@ -1,4 +1,4 @@
-import mysql.connector  # type: ignore
+import mysql.connector # type: ignore #
 from config import db_config
 
 class Database:
@@ -43,17 +43,12 @@ class Warehouse:
 
     def check_stock(self, book_id):
         try:
-            query = """
-            SELECT quantity FROM warehouse
-            WHERE id_book = %s
-            """
+            query = "SELECT quantity FROM warehouse WHERE id_book = %s"
             result = self.database.query(query, (book_id,))
-            if result:
-                return result[0]['quantity']
-            return 0  # If no result found, return 0 indicating no stock
+            return result[0]['quantity'] if result else 0
         except mysql.connector.Error as err:
             print(f"Error checking stock in the warehouse: {err}")
-            return 0  # Return 0 by default in case of an error
+            return 0
 
     def remove_quantity(self, book_id, quantity):
         try:
@@ -65,6 +60,7 @@ class Warehouse:
             self.database.submit(query, (quantity, book_id))
         except mysql.connector.Error as err:
             print(f"Error removing quantity from warehouse: {err}")
+
 
 class Book_Details:
     def __init__(self, database):
@@ -104,34 +100,27 @@ class Book_Details:
         try:
             query = "SELECT category_name FROM categories WHERE category_id = %s"
             category_name = self.database.query(query, (category_id,))
-            if category_name:
-                return category_name[0]['category_name']
-            else:
-                return None
+            return category_name[0]['category_name'] if category_name else None
         except mysql.connector.Error as err:
             print(f"Error fetching category name from database: {err}")
             return None
 
-    def isAvailable(self, book_id):
+    def is_available(self, book_id):
         warehouse = Warehouse(self.database)
         quantity = warehouse.check_stock(book_id)
         return quantity
 
     def check_borrowed_books(self, book_id):
         try:
-            query = """
-            SELECT quantity FROM warehouse
-            WHERE id_book = %s
-            """
+            query = "SELECT quantity FROM warehouse WHERE id_book = %s"
             result = self.database.query(query, (book_id,))
             if result:
                 quantity = result[0]['quantity']
-                if quantity >= 5:
-                    return True  # Book is already borrowed 5 or more times
-            return False  # Book is available for borrowing
+                return quantity >= 5
+            return False
         except mysql.connector.Error as err:
             print(f"Error checking borrowed books: {err}")
-            return True  # Return True by default in case of an error
+            return True
 
     def show_accept_message(self, request_id):
         print(f"Request {request_id} has been accepted.")
@@ -144,32 +133,45 @@ class Requested_Books:
         self.database = database
         self.warehouse = Warehouse(database)
 
-    def remove_quantity(self, book_id):
-        self.warehouse.remove_quantity(book_id, 1)
+    def remove_quantity(self, book_id, quantity):
+        self.warehouse.remove_quantity(book_id, quantity)
         
-    def accept_borrow_req(self, request_id, book_id):
+    def accept_borrow_req(self, request_id, book_id, quantity):
         try:
-            # Remove the requested quantity from the warehouse
-            self.remove_quantity(book_id)
-
-            # Update the requested_books table to mark the request as accepted
+            self.remove_quantity(book_id, quantity)
             query = "UPDATE requested_books SET status = 'accepted' WHERE request_id = %s"
             self.database.submit(query, (request_id,))
-
-            # Show the accept message
             book_details = Book_Details(self.database)
             book_details.show_accept_message(request_id)
         except mysql.connector.Error as err:
             print(f"Error accepting borrow request: {err}")
 
-    def decline_borrow_req(self, request_id):
-        try:
-            # Update the requested_books table to mark the request as declined
-            query = "UPDATE requested_books SET status = 'declined' WHERE request_id = %s"
-            self.database.submit(query, (request_id,))
 
-            # Show the reject message
-            book_details = Book_Details(self.database)
-            book_details.show_reject_message(request_id)
+    
+
+
+class Recommended_Books:
+    def __init__(self, database):
+        self.database = database
+
+    def get_books(self):
+        try:
+            query = """
+            SELECT * FROM recommended_books
+            """
+            return self.database.query(query)
         except mysql.connector.Error as err:
-            print(f"Error declining borrow request: {err}")
+            print(f"Error fetching recommended books: {err}")
+            return []
+
+    def show_books(self):
+        books = self.get_books()
+        for book in books:
+            print(f"Book ID: {book['book_id']}, Title: {book['title']}, Author: {book['author']}")
+
+    def show_book(self, book_id):
+        book = self.get_book_details(book_id)
+        if book:
+            print(f"Book ID: {book['book_id']}, Title: {book['title']}, Author: {book['author']}")
+        else:
+            print("Book not found.")

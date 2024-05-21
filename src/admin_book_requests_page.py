@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 import threading
-from database import Database, Book_Details, Requested_Books  # Ensure this is your database connection class
+from classes import Database, Book_Details, Requested_Books  # Ensure this is your database connection class
 from config import db_config  # Ensure this is your database configuration
 
 class AdminNotificationsPanel(tk.Tk):
@@ -36,7 +36,7 @@ class AdminNotificationsPanel(tk.Tk):
         label_frame.pack(fill=tk.X)  # Pack it at the top of the requests_frame
 
         # Add labels for each column
-        labels = ["request_id", "username", "request_content", "request_date", "book_id"]
+        labels = ["request_id", "username", "request_content", "request_date", "book_id", "quantity"]  # Added quantity label
         for label_text in labels:
             label = tk.Label(label_frame, text=label_text.capitalize(), font=("Helvetica", 16, "bold"), bg="#DADADA", fg="black")
             label.pack(side=tk.LEFT, padx=10, pady=5)
@@ -51,7 +51,7 @@ class AdminNotificationsPanel(tk.Tk):
         label_frame.pack(fill=tk.X)  # Pack it at the top of the requests_frame
 
         # Add labels for each column again after clearing the frame
-        labels = ["request_id", "username", "request_content", "request_date", "book_id"]
+        labels = ["request_id", "username", "request_content", "request_date", "book_id", "quantity"]  # Added quantity label
         for label_text in labels:
             label = tk.Label(label_frame, text=label_text.capitalize(), font=("Helvetica", 16, "bold"), bg="#DADADA", fg="black")
             label.pack(side=tk.LEFT, padx=10, pady=5)
@@ -68,7 +68,7 @@ class AdminNotificationsPanel(tk.Tk):
 
     def fetch_requests(self):
         query = """
-        SELECT rb.request_id, rb.request_content, rb.request_date, rb.book_id, a.username, rb.status
+        SELECT rb.request_id, rb.request_content, rb.request_date, rb.book_id, a.username, rb.quantity, rb.status
         FROM requested_books rb
         JOIN account a ON rb.user_id = a.user_id
         WHERE rb.status = 'pending'
@@ -79,12 +79,13 @@ class AdminNotificationsPanel(tk.Tk):
         request_frame = tk.Frame(self.requests_frame, bg="#DADADA")
         request_frame.pack(fill=tk.X)
 
-        request_info = f"{request['request_id']}, {request['username']}, {request['request_content']}, {request['request_date']}, {request['book_id']}"
+        request_info = f"{request['request_id']}, {request['username']}, {request['request_content']}, {request['request_date']}, {request['book_id']}, {request['quantity']}"  # Added quantity
 
         request_label = tk.Label(request_frame, text=request_info, font=("Helvetica", 16), bg="#DADADA", fg="black")
         request_label.pack(side=tk.LEFT, padx=10)
 
-        accept_button = tk.Button(request_frame, text="Accept", font=("Helvetica", 16), command=lambda: self.accept_borrow_req(request['request_id'], request['book_id']))
+        accept_button = tk.Button(request_frame, text="Accept", font=("Helvetica", 16), command=lambda: self.accept_borrow_req(request['request_id'], request['book_id'], request['quantity']))  # Passing quantity directly
+
         accept_button.pack(side=tk.RIGHT, padx=5)
 
         decline_button = tk.Button(request_frame, text="Decline", font=("Helvetica", 16), command=lambda: self.decline_borrow_req(request['request_id']))
@@ -112,8 +113,8 @@ class AdminNotificationsPanel(tk.Tk):
         # Destroy the success message after 5 seconds
         threading.Timer(4, success_window.destroy).start()
 
-    def accept_borrow_req(self, request_id, book_id):
-        self.requested_books.accept_borrow_req(request_id, book_id)
+    def accept_borrow_req(self, request_id, book_id, quantity):
+        self.requested_books.accept_borrow_req(request_id, book_id, quantity)
         self.show_message(f"Request {request_id} has been accepted.")
         self.load_requests()
 
