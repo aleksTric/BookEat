@@ -2,7 +2,7 @@ from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage, Frame, Label, Scrollbar, VERTICAL, RIGHT, Y, LEFT, BOTH, NW
 from tkinter import ttk
 from admin import Admin
-
+from library_form import Library_Form
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"C:\lessons\BookEat\src\assets2\frame0")
@@ -13,39 +13,38 @@ def relative_to_assets(path: str) -> Path:
 def search():
     search_query = entry_1.get()
     
-    results = [
-        {"title": "Book 1", "category": "Fiction", "author": "Author 1", "date": "2023-01-01", "quantity": 10},
-        {"title": "Book 2", "category": "Non-Fiction", "author": "Author 2", "date": "2022-12-31", "quantity": 5},
-        {"title": "Book 3", "category": "Science Fiction", "author": "Author 3", "date": "2023-02-01", "quantity": 2},
-    ]
+    results = admin.search_bycateg(search_query)
+    print(results)
     display_results(results)
-
 
 def display_results(results):
     for widget in results_frame.winfo_children():
         widget.destroy()
     
+    # Display each result
     for i, item in enumerate(results):
-        item_frame = Frame(results_frame, bg="#FFFFFF", padx=5, pady=5)
-        item_frame.pack(fill='x', padx=5, pady=2)
+        item_frame = Frame(results_frame, bg="#FFFFFF", padx=2, pady=2)
+        item_frame.pack(fill='x', padx=2, pady=2)
 
-        for key, value in item.items():
-            label = Label(item_frame, text=f"{key.capitalize()}: ", font=("Inter", 12), bg="#FFFFFF", width=10, anchor="e")
-            label.pack(side=LEFT)
+        for col, (key, value) in enumerate(item.items()):
+            # Create and place label
+            label = Label(item_frame, text=f"{key.capitalize()}: ", font=("Inter", 12), bg="#FFFFFF", width=7, anchor="w")
+            label.grid(row=i, column=col*2, padx=10, pady=10, sticky="w")
 
+            # Create and place entry
             entry_bg_color = "#EEEEEE"
             entry = Entry(item_frame, bd=0, bg=entry_bg_color, fg="#000000", font=("Inter", 12), width=10)
-            entry.insert(0, value)
-            entry.pack(side=LEFT)
+            entry.insert(0, str(value))  # Ensure value is a string
+            entry.grid(row=i, column=col*2+1, padx= 5, pady=5, sticky="w")
 
-            
+            # Add entry to the entries list
             if i >= len(entries):
                 entries.append({})
             entries[i][key] = entry
 
-        
+        # Create and place update button
         update_button = Button(item_frame, text="Update", command=lambda idx=i: update_item(idx))
-        update_button.pack(side=LEFT, padx=10)
+        update_button.grid(row=i, column=(col+1)*2, padx=5, pady=5, sticky="w")
 
 def update_item(idx):
     updated_values = {}
@@ -55,7 +54,7 @@ def update_item(idx):
     
 
 def display_categories():
-    categories = admin.search_bycateg()
+    categories = library.get_categories()
     global category_combobox
     category_combobox = ttk.Combobox(window, values=categories, font=("Inter", 10))
     category_combobox.set("All")  # Default value
@@ -66,8 +65,8 @@ def display_categories():
         height=37.0
     )
 
-admin = Admin()
-
+admin= Admin()
+library =Library_Form()
 
 window = Tk()
 window.geometry("1237x856")

@@ -35,8 +35,34 @@ class Library_Form:
     def show_categories():
      pass
 
-    def get_books():
-     pass
+    def get_books(self,categ):
+       
+        books = []
+        try:
+            conn = mysql.connector.connect(
+                host="127.0.0.1",
+                user="root",
+                password="",
+                database="bookeat"
+            )
+
+            cursor = conn.cursor(dictionary=True)
+
+            query ="SELECT title,category_name as Category,author,date,quantity FROM books INNER JOIN categories ON cat_id=category_id LEFT JOIN warehouse ON books.book_id = warehouse.id_book WHERE category_name LIKE %s"
+            
+            params = [f"%{categ}%"]
+            cursor.execute(query, params)
+            books = cursor.fetchall()
+            
+
+        except mysql.connector.Error as error:
+            print("Failed to fetch books:", error)
+        finally:
+            if conn.is_connected():
+                cursor.close()
+                conn.close()
+                
+        return books
 
     def show_books():
      pass

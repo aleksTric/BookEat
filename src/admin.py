@@ -15,6 +15,7 @@ class Admin:
     def upload_json(self,path):
       self.book_form.check_json(path)
 
-    def search_bycateg(self):
-       categories =self.library_form.get_categories()
-       return categories
+    def search_bycateg(self,categ):
+       
+       books =self.library_form.get_books(categ)
+       return books
