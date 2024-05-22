@@ -3,7 +3,7 @@ from tkinter import Tk, Canvas, Button, Entry, PhotoImage, Toplevel, Label, Scro
 from pathlib import Path
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/kostaskaplanis/Desktop/build/assets/admin")
+ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/kostaskaplanis/Desktop/Bookeat/src/assets/admin")
 
 def logout():
     confirm_window = Toplevel(window)
@@ -93,11 +93,12 @@ def display_users_content():
 def display_add_book_content():
     print("Add Book content displayed")
     toggle_button_image(button_3)
-    
+    subprocess.Popen(["python3", "admin_add_book.py"])
 
 def display_library_content():
     print("Library content displayed")
     toggle_button_image(button_4)
+    subprocess.Popen(["python3", "admin_library.py"])
 
 def display_study_rooms_content():
     print("Study Rooms content displayed")
