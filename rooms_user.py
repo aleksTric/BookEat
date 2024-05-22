@@ -1,21 +1,39 @@
-
 from pathlib import Path
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
-
+import mysql.connector
+from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, messagebox
+import subprocess
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\panek\OneDrive\Υπολογιστής\LIBRARY\assets_rooms_user\frame0")
-
+ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\panek\OneDrive\Υπολογιστής\build\assets_rooms_user\frame0")
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
+def connect_to_db():
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="root",
+        database="bookeat"
+    )
+
+def fetch_rooms_data():
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT room_name, status FROM rooms")
+    rooms_data = cursor.fetchall()
+    conn.close()
+    return rooms_data
+
+def open_form_if_available(status):
+    if status == "Available":
+        subprocess.run(["python", "room_form.py"])
+    else:
+        messagebox.showinfo("Room Not Available", "This room is not available.")
 
 window = Tk()
-
 window.geometry("1237x856")
 window.configure(bg = "#FFFFFF")
-
 
 canvas = Canvas(
     window,
@@ -26,7 +44,6 @@ canvas = Canvas(
     highlightthickness = 0,
     relief = "ridge"
 )
-
 canvas.place(x = 0, y = 0)
 canvas.create_text(
     137.0,
@@ -37,346 +54,123 @@ canvas.create_text(
     font=("Inter Bold", 30 * -1)
 )
 
-button_image_1 = PhotoImage(
-    file=relative_to_assets("button_1.png"))
-button_1 = Button(
-    image=button_image_1,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_1 clicked"),
-    relief="flat"
-)
-button_1.place(
-    x=137.0,
-    y=136.0,
-    width=206.0,
-    height=128.0
-)
+# Define rectangles for rooms and statuses
+room_rectangles = [
+    (137.0, 136.0, 425.0, 264.0),
+    (516.0, 136.0, 799.0, 264.0),
+    (897.0, 136.0, 1180.0, 264.0),
+    (137.0, 469.0, 425.0, 597.0),
+    (516.0, 469.0, 799.0, 597.0),
+    (897.0, 469.0, 1180.0, 597.0)
+]
 
-button_image_2 = PhotoImage(
-    file=relative_to_assets("button_2.png"))
-button_2 = Button(
-    image=button_image_2,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_2 clicked"),
-    relief="flat"
-)
-button_2.place(
-    x=137.0,
-    y=469.0,
-    width=206.0,
-    height=128.0
-)
+status_rectangles = [
+    (137.0, 303.0, 425.0, 353.0),
+    (516.0, 303.0, 804.0, 353.0),
+    (897.0, 303.0, 1185.0, 353.0),
+    (137.0, 636.0, 425.0, 686.0),
+    (516.0, 636.0, 804.0, 686.0),
+    (897.0, 636.0, 1185.0, 686.0)
+]
 
-button_image_3 = PhotoImage(
-    file=relative_to_assets("button_3.png"))
-button_3 = Button(
-    image=button_image_3,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_3 clicked"),
-    relief="flat"
-)
-button_3.place(
-    x=516.0,
-    y=469.0,
-    width=206.0,
-    height=128.0
-)
+# Draw rectangles for rooms
+for (x1, y1, x2, y2) in room_rectangles:
+    canvas.create_rectangle(x1, y1, x2, y2, fill="#D9D9D9", outline="")
 
-button_image_4 = PhotoImage(
-    file=relative_to_assets("button_4.png"))
-button_4 = Button(
-    image=button_image_4,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_4 clicked"),
-    relief="flat"
-)
-button_4.place(
-    x=897.0,
-    y=469.0,
-    width=206.0,
-    height=128.0
-)
+# Draw rectangles for statuses
+for (x1, y1, x2, y2) in status_rectangles:
+    canvas.create_rectangle(x1, y1, x2, y2, fill="#D9D9D9", outline="")
 
-button_image_5 = PhotoImage(
-    file=relative_to_assets("button_5.png"))
-button_5 = Button(
-    image=button_image_5,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_5 clicked"),
-    relief="flat"
-)
-button_5.place(
-    x=516.0,
-    y=136.0,
-    width=206.0,
-    height=128.0
-)
+# Create status labels
+status_labels = [
+    (144.0, 308.0),
+    (522.0, 308.0),
+    (901.0, 309.0),
+    (144.0, 644.0),
+    (522.0, 644.0),
+    (901.0, 644.0)
+]
 
-button_image_6 = PhotoImage(
-    file=relative_to_assets("button_6.png"))
-button_6 = Button(
-    image=button_image_6,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_6 clicked"),
-    relief="flat"
-)
-button_6.place(
-    x=897.0,
-    y=136.0,
-    width=206.0,
-    height=128.0
-)
+for (x, y) in status_labels:
+    canvas.create_text(x, y, anchor="nw", text="Status:", fill="#000000", font=("Inter Bold", 24 * -1))
 
-button_image_7 = PhotoImage(
-    file=relative_to_assets("button_7.png"))
-button_7 = Button(
-    image=button_image_7,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_7 clicked"),
-    relief="flat"
-)
-button_7.place(
-    x=186.0,
-    y=182.0,
-    width=109.0,
-    height=28.0
-)
+# Fetch room data
+room_data = fetch_rooms_data()
 
-button_image_8 = PhotoImage(
-    file=relative_to_assets("button_8.png"))
-button_8 = Button(
-    image=button_image_8,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_8 clicked"),
-    relief="flat"
-)
-button_8.place(
-    x=564.0,
-    y=182.0,
-    width=113.0,
-    height=28.0
-)
+# Define positions for room names and statuses
+room_name_positions = [
+    (161.0, 154.0),
+    (542.0, 154.0),
+    (923.0, 154.0),
+    (161.0, 491.0),
+    (542.0, 491.0),
+    (923.0, 491.0)
+]
 
-button_image_9 = PhotoImage(
-    file=relative_to_assets("button_9.png"))
-button_9 = Button(
-    image=button_image_9,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_9 clicked"),
-    relief="flat"
-)
-button_9.place(
-    x=183.0,
-    y=512.0,
-    width=125.0,
-    height=37.0
-)
+status_value_positions = [
+    (237.0, 310.0, 415.0, 345.0),
+    (615.0, 310.0, 793.0, 345.0),
+    (998.0, 310.0, 1176.0, 345.0),
+    (240.0, 644.0, 418.0, 679.0),
+    (619.0, 643.0, 797.0, 678.0),
+    (997.0, 643.0, 1175.0, 678.0)
+]
 
-button_image_10 = PhotoImage(
-    file=relative_to_assets("button_10.png"))
-button_10 = Button(
-    image=button_image_10,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_10 clicked"),
-    relief="flat"
-)
-button_10.place(
-    x=564.0,
-    y=512.0,
-    width=113.0,
-    height=29.0
-)
+# Define button positions
+button_positions = [
+    (192, 206),
+    (571, 206),
+    (951, 206),
+    (192, 539),
+    (571, 539),
+    (951, 539)
+]
 
-button_image_11 = PhotoImage(
-    file=relative_to_assets("button_11.png"))
-button_11 = Button(
-    image=button_image_11,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_11 clicked"),
-    relief="flat"
-)
-button_11.place(
-    x=947.0,
-    y=182.0,
-    width=116.0,
-    height=29.0
-)
+# Display room names and statuses
+for i, (room_name, status) in enumerate(room_data):
+    if i < 6:  # Limit to 6 rooms
+        room_name_x, room_name_y = room_name_positions[i]
+        status_x1, status_y1, status_x2, status_y2 = status_value_positions[i]
+        button_x, button_y = button_positions[i]
+        
+        canvas.create_text(
+            room_name_x,
+            room_name_y,
+            anchor="nw",
+            text=room_name,
+            fill="#000000",
+            font=("Inter Bold", 16)
+        )
+        
+        canvas.create_rectangle(
+            status_x1,
+            status_y1,
+            status_x2,
+            status_y2,
+            fill="#FFFFFF",
+            outline=""
+        )
+        
+        canvas.create_text(
+            status_x1 + 10,  # Add a bit of padding from the left
+            status_y1,
+            anchor="nw",
+            text=status,
+            fill="#000000",
+            font=("Inter Bold", 16)
+        )
+        
+        # Create buttons
+        button_image = PhotoImage(file=relative_to_assets("button_{}.png".format(i+1)))
+        button = Button(
+            image=button_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda s=status: open_form_if_available(s),
+            relief="flat"
+        )
+        button.image = button_image  # Keep a reference to avoid garbage collection
+        button.place(x=button_x, y=button_y, width=200, height=30)
 
-button_image_12 = PhotoImage(
-    file=relative_to_assets("button_12.png"))
-button_12 = Button(
-    image=button_image_12,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_12 clicked"),
-    relief="flat"
-)
-button_12.place(
-    x=947.0,
-    y=512.0,
-    width=116.0,
-    height=37.0
-)
-
-canvas.create_rectangle(
-    137.0,
-    303.0,
-    425.0,
-    353.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    897.0,
-    636.0,
-    1185.0,
-    686.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    516.0,
-    636.0,
-    804.0,
-    686.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    137.0,
-    636.0,
-    425.0,
-    686.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    897.0,
-    303.0,
-    1185.0,
-    353.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_rectangle(
-    516.0,
-    303.0,
-    804.0,
-    353.0,
-    fill="#D9D9D9",
-    outline="")
-
-canvas.create_text(
-    144.0,
-    308.0,
-    anchor="nw",
-    text="Status:",
-    fill="#000000",
-    font=("Inter", 24 * -1)
-)
-
-canvas.create_text(
-    901.0,
-    644.0,
-    anchor="nw",
-    text="Status:",
-    fill="#000000",
-    font=("Inter", 24 * -1)
-)
-
-canvas.create_text(
-    522.0,
-    644.0,
-    anchor="nw",
-    text="Status:",
-    fill="#000000",
-    font=("Inter", 24 * -1)
-)
-
-canvas.create_text(
-    144.0,
-    644.0,
-    anchor="nw",
-    text="Status:",
-    fill="#000000",
-    font=("Inter", 24 * -1)
-)
-
-canvas.create_text(
-    901.0,
-    309.0,
-    anchor="nw",
-    text="Status:",
-    fill="#000000",
-    font=("Inter", 24 * -1)
-)
-
-canvas.create_text(
-    522.0,
-    308.0,
-    anchor="nw",
-    text="Status:",
-    fill="#000000",
-    font=("Inter", 24 * -1)
-)
-
-canvas.create_rectangle(
-    237.0,
-    310.0,
-    415.0,
-    345.0,
-    fill="#FFFFFF",
-    outline="")
-
-canvas.create_rectangle(
-    997.0,
-    643.0,
-    1175.0,
-    678.0,
-    fill="#FFFFFF",
-    outline="")
-
-canvas.create_rectangle(
-    619.0,
-    643.0,
-    797.0,
-    678.0,
-    fill="#FFFFFF",
-    outline="")
-
-canvas.create_rectangle(
-    240.0,
-    644.0,
-    418.0,
-    679.0,
-    fill="#FFFFFF",
-    outline="")
-
-canvas.create_rectangle(
-    998.0,
-    310.0,
-    1176.0,
-    345.0,
-    fill="#FFFFFF",
-    outline="")
-
-canvas.create_rectangle(
-    615.0,
-    310.0,
-    793.0,
-    345.0,
-    fill="#FFFFFF",
-    outline="")
 window.resizable(False, False)
 window.mainloop()

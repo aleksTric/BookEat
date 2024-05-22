@@ -1,24 +1,74 @@
-
+import mysql.connector
 from pathlib import Path
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
+from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, messagebox
 from tkinter import ttk  # Import ttk for the combobox
 
+# Database connection
+def connect_to_db():
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="root",
+        database="bookeat"
+    )
 
+# Συνάρτηση για ενημέρωση της βάσης δεδομένων
+def update_database(members, timer):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE room SET members = %s, timer = %s", (members, timer))
+    conn.commit()
+    conn.close()
+
+# Function to fetch equipment from the database
+def get_equipment():
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT equipment_name FROM equipment")
+    equipment = cursor.fetchall()
+    conn.close()
+    return [item[0] for item in equipment]
+
+def insert_room(room_name, members, timer):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO rooms (room_name, members, timer, status) VALUES (%s, %s, %s, %s)",
+                   (room_name, members, timer, 'Available'))
+    conn.commit()
+    conn.close()
+
+def check_parameters(room_name, members, timer):
+    if members < 5:
+        if 1 <= timer <= 3:
+            return True, ""
+        else:
+            return False, "Error in timer. Timer must be between 1 and 3."
+    else:
+        return False, "Error in members. Members must be less than 5."
+
+def create_button_clicked():
+    room_name = entry_1.get()
+    members = int(entry_2.get())
+    timer = int(entry_3.get())
+    valid, message = check_parameters(room_name, members, timer)
+    if valid:
+        insert_room(room_name, members, timer)
+        messagebox.showinfo("Success", "Room created successfully!")
+    else:
+        messagebox.showerror("Error", message)
+
+# Define the paths
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\panek\OneDrive\Υπολογιστής\LIBRARY\assets_room_form\frame0")
-
+ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\panek\OneDrive\Υπολογιστής\build\assets_room_form\frame0")
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
-
 
 window = Tk()
 
 window.geometry("1237x856")
 window.configure(bg = "#FFFFFF")
 
-# Define the categories for the combobox
-categories = ["Category 1", "Category 2", "Category 3", "Category 4"]
 canvas = Canvas(
     window,
     bg = "#FFFFFF",
@@ -179,19 +229,19 @@ button_2.place(
     height=29.0
 )
 
-# Create the combobox
-category_combobox = ttk.Combobox(window, values=categories, font=("Inter", 14))
-category_combobox.set("Select announcement")  # Default value
-category_combobox.place(
-     x=549.0,
+# Create the combobox for equipment
+equipment_combobox = ttk.Combobox(window, values=get_equipment(), font=("Inter", 14))
+equipment_combobox.set("Select equipment")  # Default value
+equipment_combobox.place(
+    x=549.0,
     y=320.0,
     width=255.0,
     height=50.0
 )
 
 # Create the combobox
-category_combobox = ttk.Combobox(window, values=categories, font=("Inter", 14))
-category_combobox.set("Select announcement")  # Default value
+category_combobox = ttk.Combobox(window, values=get_equipment(), font=("Inter", 14))
+category_combobox.set("Select equipment")  # Default value
 category_combobox.place(
     x=259.0,
     y=320.0,
@@ -200,8 +250,8 @@ category_combobox.place(
 )
 
 # Create the combobox
-category_combobox = ttk.Combobox(window, values=categories, font=("Inter", 14))
-category_combobox.set("Select announcement")  # Default value
+category_combobox = ttk.Combobox(window, values=get_equipment(), font=("Inter", 14))
+category_combobox.set("Select equipment")  # Default value
 category_combobox.place(
     x=854.0,
     y=320.0,
@@ -209,7 +259,11 @@ category_combobox.place(
     height=50.0
 )
 
-
+create_button = Button(
+    text="Create",
+    command=create_button_clicked  # Καλείται η συνάρτηση create_button_clicked όταν πατηθεί το κουμπί
+)
+create_button.place(x=500, y=800)  # Τοποθετούμε το κουμπί στο παράθυρο
 
 window.resizable(False, False)
 window.mainloop()
