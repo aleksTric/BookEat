@@ -8,7 +8,15 @@ ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/kostaskaplanis/Desktop/build/assets/ho
 def logout():
     confirm_window = Toplevel(window)
     confirm_window.title("Logout Confirmation")
-    confirm_window.geometry("500x500")
+    confirm_window.config(bg="#7B3BE3")
+
+    # Calculate the position to center the window
+    window_position_x = confirm_window.winfo_screenwidth() // 2 - 250  # Half of window width (500 / 2)
+    window_position_y = confirm_window.winfo_screenheight() // 2 - 250  # Half of window height (500 / 2)
+
+    # Set the window geometry with the calculated position
+    confirm_window.geometry("500x500+{}+{}".format(window_position_x, window_position_y))
+
 
     # Calculate padding and font size for larger window
     text_padding = 30
@@ -93,7 +101,7 @@ def display_study_rooms_content():
 def display_notifications_content():
     print("Notifications content displayed")
     toggle_button_image(button_6)
-    subprocess.Popen(["python3", "notifications_page.py"])
+    subprocess.Popen(["python3", "user_notifications_page.py"])
 
 
 def display_announcements_content():
@@ -103,6 +111,8 @@ window = Tk()
 window.title('Menu')
 window.geometry("500x600")  # Resize window
 window.configure(bg="#7B3BE3")  # Set background color to purple
+window.geometry("500x600+{}+{}".format(window.winfo_screenwidth() // 2 - 250, window.winfo_screenheight() // 2 - 300))
+
 
 canvas = Canvas(
     window,

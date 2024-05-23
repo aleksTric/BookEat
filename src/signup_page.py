@@ -66,8 +66,14 @@ window = Tk()
 window.wm_iconname("BookEat")
 window.title("Create a Free Account")
 window.iconphoto(True, PhotoImage(file="./assets/login/bookeat_icon.png"))
-window.geometry("754x701")
+# window.geometry("754x701")
 window.configure(bg="#FFFFFF")
+# Calculate the position to center the window
+window_position_x = window.winfo_screenwidth() // 2 - 377  # Half of window width (754 / 2)
+window_position_y = window.winfo_screenheight() // 2 - 351  # Half of window height (701 / 2)
+
+# Set the window geometry with the calculated position
+window.geometry("754x701+{}+{}".format(window_position_x, window_position_y))
 
 canvas = Canvas(
     window,

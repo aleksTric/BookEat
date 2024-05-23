@@ -3,7 +3,7 @@
 Version: `v-0.1`
 
 <p align="center">
-<img width="300" style="border-radius:15%" alt="BookEat Logo" src="./bookeat_github_logo.png" />
+<img width="300" style="border-radius:15% " alt="BookEat Logo" src="./bookeat_github_logo.png" />
 
 </p>
 

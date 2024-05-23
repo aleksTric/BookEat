@@ -3,12 +3,21 @@ from tkinter import Tk, Canvas, Button, Entry, PhotoImage, Toplevel, Label, Scro
 from pathlib import Path
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/kostaskaplanis/Desktop/build/assets/admin")
+ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/kostaskaplanis/Desktop/Bookeat/src/assets/admin")
 
 def logout():
     confirm_window = Toplevel(window)
     confirm_window.title("Logout Confirmation")
-    confirm_window.geometry("500x500")
+    confirm_window.config(bg="#7B3BE3")
+    confirm_window.iconphoto(True, PhotoImage(file="./assets/login/bookeat_icon.png"))
+
+    # Calculate the position to center the window
+    window_position_x = confirm_window.winfo_screenwidth() // 2 - 250  # Half of window width (500 / 2)
+    window_position_y = confirm_window.winfo_screenheight() // 2 - 250  # Half of window height (500 / 2)
+
+    # Set the window geometry with the calculated position
+    confirm_window.geometry("500x500+{}+{}".format(window_position_x, window_position_y))
+
 
     # Calculate padding and font size for larger window
     text_padding = 30
@@ -84,11 +93,12 @@ def display_users_content():
 def display_add_book_content():
     print("Add Book content displayed")
     toggle_button_image(button_3)
-    
+    subprocess.Popen(["python3", "admin_add_book.py"])
 
 def display_library_content():
     print("Library content displayed")
     toggle_button_image(button_4)
+    subprocess.Popen(["python3", "admin_library.py"])
 
 def display_study_rooms_content():
     print("Study Rooms content displayed")
@@ -97,6 +107,7 @@ def display_study_rooms_content():
 def display_book_requests_content():
     print("Book Requests content displayed")
     toggle_button_image(button_6)
+    subprocess.Popen(["python3", "admin_book_requests_page.py"])
 
 def display_notifications_content():
     print("Notifications content displayed")
@@ -111,6 +122,14 @@ window = Tk()
 window.title('Menu')
 window.geometry("500x800")  # Resize window
 window.configure(bg="#7B3BE3")  # Set background color to purple
+window.iconphoto(True, PhotoImage(file="./assets/login/bookeat_icon.png"))
+
+# Calculate the position to center the window
+window_position_x = window.winfo_screenwidth() // 2 - 250  # Half of window width (500 / 2)
+window_position_y = window.winfo_screenheight() // 2 - 400  # Half of window height (800 / 2)
+
+# Set the window geometry with the calculated position
+window.geometry("500x800+{}+{}".format(window_position_x, window_position_y))
 
 canvas = Canvas(
     window,
