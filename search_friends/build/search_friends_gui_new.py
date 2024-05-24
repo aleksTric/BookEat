@@ -16,6 +16,7 @@ from database import Database
 from notifications import Notifications 
 from searchfriends import SearchFriends
 from user import User
+from friendslist import FriendsList
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -65,7 +66,7 @@ class MyApplication:
        self.canvas.create_text( 358.0, 26.0, anchor="nw", text="Search", fill="#000000", font=("Inika", 25 * -1))
 
        #logged in user 
-       self.text_item_user = self.canvas.create_text( 876.0, 22.0, anchor="nw", text="aleks", fill="#000000", font=("Inter Medium", 25 * -1))
+       self.text_item_user = self.canvas.create_text( 876.0, 22.0, anchor="nw", text="Alexandra", fill="#000000", font=("Inter Medium", 25 * -1))
        
        #self.loggedin_user = User(self.canvas, self.db)
        #self.loggedin_user.is_user(self.text_item_user)
@@ -90,12 +91,12 @@ class MyApplication:
        self.canvas.create_rectangle( 406.0, 481.0, 479.0, 554.0, fill="#FFFFFF", outline="")
        
        #TEXT_ITEMS that show friends in the main page
-       self.text_item0 = self.canvas.create_text( 300.0, 210.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
-       self.text_item1 = self.canvas.create_text( 600.0, 210.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
-       self.text_item2 = self.canvas.create_text( 900.0, 210.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
-       self.text_item3 = self.canvas.create_text( 300.0, 489.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
-       self.text_item4 = self.canvas.create_text( 600.0, 489.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
-       self.text_item5 = self.canvas.create_text( 900.0, 489.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
+       self.text_item0 = self.canvas.create_text( 260.0, 210.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
+       self.text_item1 = self.canvas.create_text( 560.0, 210.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
+       self.text_item2 = self.canvas.create_text( 860.0, 210.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
+       self.text_item3 = self.canvas.create_text( 260.0, 489.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
+       self.text_item4 = self.canvas.create_text( 560.0, 489.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
+       self.text_item5 = self.canvas.create_text( 860.0, 489.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
        
        self.searchfriend = SearchFriends(self.canvas, self.db, self.text_item0, self.text_item1, self.text_item2,
                                           self.text_item3, self.text_item4, self.text_item5)
@@ -153,7 +154,7 @@ class MyApplication:
 
 
     def button_pressed(self, text_item):
-        self.new_friend = Notifications(self.canvas, self.db)
+        self.new_friend = Notifications(self.canvas, self.db, self.text_item_user)
         print(f"button clicked!")
         self.new_friend.send_friend_req(text_item)
 

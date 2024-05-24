@@ -11,13 +11,13 @@ class User:
       query = "SELECT email FROM account WHERE username LIKE %s "
       cursor = self.db.execute_query(query, ('%' + username + '%',))
       info = cursor.fetchall()
-      email = info
+      email = info[0][0]
       print(f"user email :{email}")
       return email
     
     def get_user(self, text_item):
-       #self.num = int
-       #if self.num == 1:
-          friend_email = self.is_user(text_item)
-          print(f"friend email: {friend_email}")
-          return friend_email
+        friend_email = self.is_user(text_item)
+        print(f"friend email: {friend_email}")
+        return friend_email
+    
+    def get_user_library():
