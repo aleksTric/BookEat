@@ -1,3 +1,4 @@
+import mysql.connector
 from database import Database 
 
 class SearchFriends:
@@ -30,10 +31,3 @@ class SearchFriends:
             self.canvas.itemconfig(self.text_item3, text=rows[3])
             self.canvas.itemconfig(self.text_item4, text=rows[4])
             self.canvas.itemconfig(self.text_item5, text=rows[5])
-
-
-            #for i,row in enumerate(rows):
-            #    if i<3:
-            #        self.canvas.itemconfig(self.text_items_row1[i], text=rows[i])
-            #    elif i>=3 and i<6:
-            #        self.canvas.itemconfig(self.text_items_row2[i-3], text=rows[i])

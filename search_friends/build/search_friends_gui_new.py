@@ -15,6 +15,7 @@ from tkinter import messagebox
 from database import Database
 from notifications import Notifications 
 from searchfriends import SearchFriends
+from user import User
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -40,6 +41,7 @@ class MyApplication:
         self.create_ui()
         self.retrieve_data()
         
+       # self.friend_user.get_user(self.text_item0)
 
     def create_ui(self):
        label = tk.Label(self.window, text="Search:")
@@ -51,31 +53,6 @@ class MyApplication:
 
        self.canvas.create_rectangle(200.0, 139.0, 1149.0, 802.0, fill="#FFFFFF", outline="")
        self.canvas.create_rectangle(845.0, 11.0, 1205.0, 111.0, fill="#FFFFFF", outline="")
-       
-       #BUTTONS
-       self.button_image_1 = PhotoImage(file=relative_to_assets("button_1.png"))
-       self.button_1 = Button(image=self.button_image_1,borderwidth=0,highlightthickness=0,command=lambda: print("button_1 clicked"),relief="flat")
-       self.button_1.place( x=292.0, y=341.0, width=142.0, height=44.0)
-
-       self.button_image_2 = PhotoImage(file=relative_to_assets("button_2.png"))
-       self.button_2 = Button( image=self.button_image_2, borderwidth=0, highlightthickness=0, command=lambda: print("button_2 clicked"), relief="flat")
-       self.button_2.place( x=609.0, y=341.0, width=131.0, height=44.0)
-
-       self.button_image_3 = PhotoImage( file=relative_to_assets("button_3.png"))
-       self.button_3 = Button(image=self.button_image_3,borderwidth=0,highlightthickness=0,command=lambda: print("button_3 clicked"),relief="flat")
-       self.button_3.place( x=909.0, y=338.0, width=131.0, height=47.0)
-
-       self.button_image_4 = PhotoImage( file=relative_to_assets("button_4.png"))
-       self.button_4 = Button( image=self.button_image_4, borderwidth=0, highlightthickness=0, command=lambda: print("button_4 clicked"), relief="flat")
-       self.button_4.place(x=909.0,y=596.0,width=131.0,height=47.0)
-
-       self.button_image_5 = PhotoImage(file=relative_to_assets("button_5.png"))
-       self.button_5 = Button(image=self.button_image_5,borderwidth=0,highlightthickness=0,command=lambda: print("button_5 clicked"),relief="flat")
-       self.button_5.place( x=609.0, y=596.0, width=123.0, height=47.0)
-
-       self.button_image_6 = PhotoImage(file=relative_to_assets("button_6.png"))
-       self.button_6 = Button( image=self.button_image_6, borderwidth=0, highlightthickness=0, command=lambda: print("button_6 clicked"), relief="flat")
-       self.button_6.place( x=303.0, y=596.0, width=131.0, height=47.0)
 
        self.canvas.create_rectangle( 245.0, 192.0, 493.0, 425.0, fill="#D9D9D9", outline="")
        self.canvas.create_rectangle( 548.0, 192.0, 796.0, 425.0, fill="#D9D9D9", outline="")
@@ -87,7 +64,14 @@ class MyApplication:
 
        self.canvas.create_text( 358.0, 26.0, anchor="nw", text="Search", fill="#000000", font=("Inika", 25 * -1))
 
-       self.canvas.create_text( 876.0, 22.0, anchor="nw", text="Kostas", fill="#000000", font=("Inter Medium", 25 * -1))
+       #logged in user 
+       self.text_item_user = self.canvas.create_text( 876.0, 22.0, anchor="nw", text="aleks", fill="#000000", font=("Inter Medium", 25 * -1))
+       
+       #self.loggedin_user = User(self.canvas, self.db)
+       #self.loggedin_user.is_user(self.text_item_user)
+       
+       # friend user
+       self.friend_user = User(self.canvas, self.db)
 
        self.canvas.create_rectangle( 881.0, 65.0, 1101.0, 75.0, fill="#000000", outline="")
     
@@ -105,7 +89,7 @@ class MyApplication:
        self.canvas.create_rectangle( 703.0, 481.0, 776.0, 554.0, fill="#FFFFFF", outline="")
        self.canvas.create_rectangle( 406.0, 481.0, 479.0, 554.0, fill="#FFFFFF", outline="")
        
-       # text_items that show friends in the main page
+       #TEXT_ITEMS that show friends in the main page
        self.text_item0 = self.canvas.create_text( 300.0, 210.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
        self.text_item1 = self.canvas.create_text( 600.0, 210.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
        self.text_item2 = self.canvas.create_text( 900.0, 210.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
@@ -116,6 +100,7 @@ class MyApplication:
        self.searchfriend = SearchFriends(self.canvas, self.db, self.text_item0, self.text_item1, self.text_item2,
                                           self.text_item3, self.text_item4, self.text_item5)
        
+       #SEARCH
        entry_image_1 = PhotoImage(file=relative_to_assets("entry_1.png"))
        entry_bg_1 = self.canvas.create_image(585.0,45.0,image=entry_image_1)
        self.search_entry = tk.Entry(self.window,bd=0,bg="#FFFFFF",fg="#000716",highlightthickness=0)
@@ -123,13 +108,36 @@ class MyApplication:
        self.search_entry.bind("<KeyRelease>", self.get_by_username)
        self.search_entry.place(x=484.0,y=18.0,width=202.0,height=52.0)
 
+       #BUTTONS
+       self.button_image_1 = PhotoImage(file=relative_to_assets("button_1.png"))
+       self.button_1 = Button(image=self.button_image_1,borderwidth=0,highlightthickness=0,command=lambda: self.button_pressed(self.text_item0),relief="flat")
+       self.button_1.place( x=292.0, y=341.0, width=142.0, height=44.0)
+
+       self.button_image_2 = PhotoImage(file=relative_to_assets("button_2.png"))
+       self.button_2 = Button( image=self.button_image_2, borderwidth=0, highlightthickness=0, command=lambda: self.button_pressed(self.text_item1), relief="flat")
+       self.button_2.place( x=609.0, y=341.0, width=131.0, height=44.0)
+
+       self.button_image_3 = PhotoImage( file=relative_to_assets("button_3.png"))
+       self.button_3 = Button(image=self.button_image_3,borderwidth=0,highlightthickness=0,command=lambda: self.button_pressed(self.text_item2),relief="flat")
+       self.button_3.place( x=909.0, y=338.0, width=131.0, height=47.0)
+
+       self.button_image_4 = PhotoImage( file=relative_to_assets("button_4.png"))
+       self.button_4 = Button( image=self.button_image_4, borderwidth=0, highlightthickness=0, command=lambda: self.button_pressed(self.text_item5), relief="flat")
+       self.button_4.place(x=909.0,y=596.0,width=131.0,height=47.0)
+
+       self.button_image_5 = PhotoImage(file=relative_to_assets("button_5.png"))
+       self.button_5 = Button(image=self.button_image_5,borderwidth=0,highlightthickness=0,command=lambda: self.button_pressed(self.text_item4),relief="flat")
+       self.button_5.place( x=609.0, y=596.0, width=123.0, height=47.0)
+
+       self.button_image_6 = PhotoImage(file=relative_to_assets("button_6.png"))
+       self.button_6 = Button( image=self.button_image_6, borderwidth=0, highlightthickness=0, command=lambda: self.button_pressed(self.text_item3), relief="flat")
+       self.button_6.place( x=303.0, y=596.0, width=131.0, height=47.0)
+
 
     def retrieve_data(self):
        query = "SELECT username FROM account"
        cursor = self.db.execute_query(query)
        rows = cursor.fetchall()
-
-       print(f"Retrieved rows: {rows}")
        
        self.canvas.itemconfig(self.text_item0, text=rows[0])
        self.canvas.itemconfig(self.text_item1, text=rows[1])
@@ -143,10 +151,13 @@ class MyApplication:
          search_term = event.widget.get()
          self.searchfriend.search(search_term) 
 
+
+    def button_pressed(self, text_item):
+        self.new_friend = Notifications(self.canvas, self.db)
+        print(f"button clicked!")
+        self.new_friend.send_friend_req(text_item)
+
 if __name__ == "__main__":
      root = tk.Tk()
      app = MyApplication(root)
      root.mainloop()
-    #self.window.resizable(False, False)
-    #self.window.mainloop()
-
