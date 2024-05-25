@@ -1,4 +1,4 @@
-# BookEAT
+# BookEAT :books:
 
 Version: `v-0.1`
 
@@ -21,6 +21,40 @@ We decided to develop a (borrowing) library system in python, that aims to bring
 6.  Socialization of Readers
 7.  Book Reviews & Recommendations
 8.  Room Rent
+
+## Implementation Assumptions
+
+### Konstantinos Kaplanis :technologist:
+
+Konstantinos Kaplanis was responsible for the **Borrowing, Return of Book** use-case.
+
+- Branch: [use-case-1-2](https://github.com/aleksTric/BookEat/tree/use-cases-1-2)
+- GitHub: [kostaskaplanis2001](https://github.com/kostaskaplanis2001)
+
+### Dimitris Mparoutis :technologist:
+
+Dimitris Mparoutis was responsible for the **Library Management, Book Analysis & Recommendations** use-case.
+
+- Branch: [use-case-3-7](https://github.com/aleksTric/BookEat/tree/use-cases-3-7)
+- GitHub: [jimbaroutis](https://github.com/jimbaroutis)
+
+### Konstantinos Tsiligiannis :technologist:
+
+Konstantinos Tsiligiannis was responsible for the **Event Announcements, Room Rental** use-case.
+
+- Branch: [use-case-4-8](https://github.com/aleksTric/BookEat/tree/use-cases-4-8)
+- GitHub: [KostasTsiligiannis](https://github.com/KostasTsiligiannis)
+
+### Panagiota Alexandra Tricha :woman_technologist:
+
+Panagiota Alexandra Tricha was responsible for the **Library Organization User, Socialization of Readers** use-case.
+
+- Branch: [use-case-5-6](https://github.com/aleksTric/BookEat/tree/use-cases-5-6)
+- GitHub: [aleksTric](https://github.com/aleksTric)
+
+2. Each part of the use-cases was implemented on separate branches by each member of the team, named after the specific use-case they were responsible for.
+
+3. The connection details are not fully functional and are replaced with static mock data.
 
 ## :coffee: Team Members :coffee:
 
