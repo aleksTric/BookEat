@@ -5,7 +5,8 @@ from categories import Categories
 import json
 
 class Book_Form(Books): 
-    def __init__(self):
+    def __init__(self, admin_instance):
+      self.admin_instance = admin_instance
       pass
 
     def check_book(self,title,category,author,date):
@@ -26,32 +27,13 @@ class Book_Form(Books):
            else:
             tkinter.messagebox.showerror("Error", "the category doesnt exist") 
     
-    def insert_book(self,title,category_id,author,date):
-      try: 
-        
-          conn = mysql.connector.connect(
-            host="127.0.0.1",
-            user="root",
-            password="",
-            database="bookeat"
-          )
-         
-          cursor = conn.cursor()
-      
-          sql = "INSERT INTO books (title, cat_id, author, date) VALUES (%s, %s, %s, %s)"
-          cursor.execute(sql, (title, category_id, author, date))
-          conn.commit()
-          
-      except mysql.connector.Error as error:
-            print("Failed to insert book:", error)   
-      finally:
-            
-            if conn.is_connected():
-                cursor.close()
-                conn.close()
-    
-    
-    
+    def insert_book(self, title, category_id, author, date):
+        try: 
+            # Assuming 'admin' is an instance of Admin class with insert_book method
+            self.admin_instance.insert_book(title, category_id, author, date)
+        except Exception as error:
+            print("Failed to insert book:", error)
+
     
     def check_category(self,category):
       categ_obj = Categories(category)
@@ -67,8 +49,8 @@ class Book_Form(Books):
         
           conn = mysql.connector.connect(
             host="127.0.0.1",
-            user="root",
-            password="",
+            user="kostas",
+            password="kostas1234",
             database="bookeat"
           )
          
