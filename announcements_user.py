@@ -19,7 +19,7 @@ def connect_to_db():
         database="bookeat"
     )
 
-class Announcements:
+class Event:
 
     def __init__(self, title, date_of_the_event, interested_users, available_seats):
         self.__title = title

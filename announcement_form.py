@@ -10,7 +10,7 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
-class Announcement_form:
+class Announcements:
     def __init__(self, window):
 
         self.window = window
@@ -158,7 +158,7 @@ canvas.create_rectangle(
     outline=""
 )
 
-announcements = Announcement_form(window)
+announcements = Announcements(window)
 
 canvas.create_text(
     895.0,
