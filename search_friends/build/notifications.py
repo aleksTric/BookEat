@@ -14,7 +14,7 @@ class Notifications:
        self.logged_user = User(self.canvas, self.db)
 
        user_email = self.logged_user.is_user(self.text_item_user)
-       friend_email = self.friend.get_user(text_item)
+       friend_email = self.friend.is_user(text_item)
        
        query = "SELECT user_id FROM account WHERE email LIKE %s"
        cursor = self.db.execute_query(query, ('%' + user_email + '%',))
@@ -37,7 +37,7 @@ class Notifications:
            messagebox("Error", "No request")
 
     #def get_request_reply():
-
-    def get_bookreq_reply():
+           
+    #def get_bookreq_reply():
     
-    def delete_not():
+   # def delete_notification():

@@ -9,7 +9,7 @@ class Database:
         self.database = database 
         self.conn = None
 
-    def connect(self):
+    def connect_to_database(self):
         try:
             self.conn = mysql.connector.connect(
                 host=self.host,
@@ -22,7 +22,7 @@ class Database:
             messagebox.showerror("Error", f"Failed to connect to database: {err}")
             return None
         
-    def close(self):
+    def disconnect_to_database(self):
         if self.conn:
             self.conn.close()
 
@@ -35,3 +35,16 @@ class Database:
             messagebox.showerror("Error", f"Failed to execute query: {err}")
             return None
         
+    def retrieve_data(self, canvas, db, text1, text2, text3, text4, text5, text6):
+       self.canvas = canvas 
+       self.db = db
+       query = "SELECT username FROM account"
+       cursor = self.db.execute_query(query)
+       rows = cursor.fetchall()
+       
+       self.canvas.itemconfig(text1, text=rows[0])
+       self.canvas.itemconfig(text2, text=rows[1])
+       self.canvas.itemconfig(text3, text=rows[2])
+       self.canvas.itemconfig(text4, text=rows[3])
+       self.canvas.itemconfig(text5, text=rows[4])
+       self.canvas.itemconfig(text6, text=rows[5])

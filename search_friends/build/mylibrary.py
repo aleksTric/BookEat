@@ -12,3 +12,8 @@ class MyLibrary:
     def add_book_favs():
 
     def del_book_wants():
+
+
+    def remove_from_favourites():
+
+    def remove_from_wishlist():
