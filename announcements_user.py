@@ -3,14 +3,12 @@ from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 from tkinter import ttk
 
-# Define the paths
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\panek\OneDrive\Υπολογιστής\LIBRARY\assets_announcements_user\frame0")
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
-# Database connection
 def connect_to_db():
     return mysql.connector.connect(
         host="localhost",
@@ -58,12 +56,10 @@ class Event:
             canvas.itemconfig(users_label, text=interested_users)
             canvas.itemconfig(texting_label, text=texting)
 
-    # Initialize the window
     window = Tk()
     window.geometry("1237x856")
     window.configure(bg="#FFFFFF")
 
-    # Create a canvas
     canvas = Canvas(
         window,
         bg="#FFFFFF",
@@ -91,7 +87,6 @@ class Event:
         outline=""
     )
 
-    # Create the combobox
     categories = get_events()
     category_combobox = ttk.Combobox(window, values=categories, font=("Inter", 14))
     category_combobox.set("Select announcement")
@@ -102,7 +97,6 @@ class Event:
         height=28.0
     )
 
-    # Define a callback for when an event is selected
     category_combobox.bind("<<ComboboxSelected>>", lambda e: update_event_details(category_combobox.get()))
 
     canvas.create_text(
@@ -114,7 +108,6 @@ class Event:
         font=("Inter", 18)
     )
 
-    # Continue with the rest of the GUI components
     button_image_2 = PhotoImage(file=relative_to_assets("button_2.png"))
     button_2 = Button(
         image=button_image_2,
@@ -216,10 +209,10 @@ class Event:
     )
 
     canvas.create_rectangle(
-        813.0,  # Adjusted X coordinate for the gray rectangle
-        570.0,  # Adjusted Y coordinate for the gray rectangle
-        1183.0,  # Increased width of the gray rectangle
-        630.0,  # Increased height of the gray rectangle
+        813.0,  
+        570.0,  
+        1183.0,  
+        630.0,  
         fill="#D9D9D9",
         outline=""
     )
@@ -234,23 +227,22 @@ class Event:
     )
 
     canvas.create_rectangle(
-        1045.0,  # Adjusted X coordinate for the white rectangle
+        1045.0,  
         582.0,
-        1175.0,  # Adjusted width of the white rectangle
+        1175.0,  
         617.0,
         fill="#FFFFFF",
         outline=""
     )
     date_label = canvas.create_text(
-        1055.0,  # Adjusted X coordinate
+        1055.0, 
         582.0,
         anchor="nw",
         text="N/A",
         fill="#000000",
-        font=("Inter", 10)  # Adjust font size to 10
+        font=("Inter", 10)  
     )
 
-    # Add label for the announcement text
     canvas.create_text(
         61.0,
         210.0,

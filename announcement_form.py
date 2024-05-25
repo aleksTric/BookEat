@@ -61,9 +61,7 @@ class Announcements:
             fg="#999999",
             bg="#FFFFFF"
         )
-        placeholder_label.place(x=x + 5, y=y + 3)  # Adjust label position
-
-        # Hide label when the entry field is focused
+        placeholder_label.place(x=x + 5, y=y + 3)  
         entry.bind("<FocusIn>", lambda event: placeholder_label.place_forget())
         entry.bind("<FocusOut>", lambda event: placeholder_label.place(x=x + 5, y=y + 3) if not entry.get() else None)
 

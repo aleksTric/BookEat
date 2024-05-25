@@ -1,7 +1,7 @@
 import mysql.connector
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, messagebox
-from tkinter import ttk  # Import ttk for the combobox
+from tkinter import ttk  
 
 # Define the paths
 OUTPUT_PATH = Path(__file__).parent
@@ -11,7 +11,6 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
-# Database connection
 def connect_to_db():
     return mysql.connector.connect(
         host="localhost",
@@ -28,7 +27,6 @@ class Room_form:
         self.__timer = timer
         self.__members = members
 
-    # Συνάρτηση για ενημέρωση της βάσης δεδομένων
     def update_database(members, timer):
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -36,7 +34,6 @@ class Room_form:
         conn.commit()
         conn.close()
 
-    # Function to fetch equipment from the database
     def get_equipment():
         conn = connect_to_db()
         cursor = conn.cursor()
@@ -239,7 +236,6 @@ class Room_form:
         height=29.0
     )
 
-    # Create the combobox for equipment
     equipment_combobox = ttk.Combobox(window, values=get_equipment(), font=("Inter", 14))
     equipment_combobox.set("Select equipment")  # Default value
     equipment_combobox.place(
@@ -249,7 +245,6 @@ class Room_form:
         height=50.0
     )
 
-    # Create the combobox
     category_combobox = ttk.Combobox(window, values=get_equipment(), font=("Inter", 14))
     category_combobox.set("Select equipment")  # Default value
     category_combobox.place(
@@ -259,7 +254,6 @@ class Room_form:
         height=50.0
     )
 
-    # Create the combobox
     category_combobox = ttk.Combobox(window, values=get_equipment(), font=("Inter", 14))
     category_combobox.set("Select equipment")  # Default value
     category_combobox.place(
@@ -271,9 +265,9 @@ class Room_form:
 
     create_button = Button(
         text="Create",
-        command=send_message  # Καλείται η συνάρτηση send_message όταν πατηθεί το κουμπί
+        command=send_message  
     )
-    create_button.place(x=500, y=800)  # Τοποθετούμε το κουμπί στο παράθυρο
+    create_button.place(x=500, y=800) 
 
     window.resizable(False, False)
     window.mainloop()

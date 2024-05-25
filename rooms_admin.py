@@ -285,7 +285,7 @@ class Rooms:
     room_statuses = get_status()
 
     category_combobox = ttk.Combobox(window, values=requests, font=("Inter", 14))
-    category_combobox.set("Requests")  # Default value
+    category_combobox.set("Requests")  
     category_combobox.place(
         x=137.0,
         y=341.0,
@@ -295,7 +295,7 @@ class Rooms:
 
 
     category_combobox = ttk.Combobox(window, values=requests, font=("Inter", 14))
-    category_combobox.set("Requests")  # Default value
+    category_combobox.set("Requests")  
     category_combobox.place(
         x=896.0,
         y=651.0,
@@ -307,7 +307,7 @@ class Rooms:
 
 
     category_combobox = ttk.Combobox(window, values=requests, font=("Inter", 14))
-    category_combobox.set("Requests")  # Default value
+    category_combobox.set("Requests")  
     category_combobox.place(
         x=514.0,
         y=652.0,
@@ -318,7 +318,7 @@ class Rooms:
 
 
     category_combobox = ttk.Combobox(window, values=requests, font=("Inter", 14))
-    category_combobox.set("Requests")  # Default value
+    category_combobox.set("Requests")  
     category_combobox.place(
         x=135.0,
         y=652.0,
@@ -329,7 +329,7 @@ class Rooms:
 
 
     category_combobox = ttk.Combobox(window, values=requests, font=("Inter", 14))
-    category_combobox.set("Requests")  # Default value
+    category_combobox.set("Requests")  
     category_combobox.place(
         x=897.0,
         y=341.0,
@@ -339,7 +339,7 @@ class Rooms:
 
 
     category_combobox = ttk.Combobox(window, values=requests, font=("Inter", 14))
-    category_combobox.set("Requests")  # Default value
+    category_combobox.set("Requests") 
     category_combobox.place(
         x=519.0,
         y=341.0,

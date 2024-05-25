@@ -60,7 +60,6 @@ class Rooms:
         font=("Inter Bold", 30 * -1)
     )
 
-    # Define rectangles for rooms and statuses
     room_rectangles = [
         (137.0, 136.0, 425.0, 264.0),
         (516.0, 136.0, 799.0, 264.0),
@@ -79,15 +78,12 @@ class Rooms:
         (897.0, 636.0, 1185.0, 686.0)
     ]
 
-    # Draw rectangles for rooms
     for (x1, y1, x2, y2) in room_rectangles:
         canvas.create_rectangle(x1, y1, x2, y2, fill="#D9D9D9", outline="")
 
-    # Draw rectangles for statuses
     for (x1, y1, x2, y2) in status_rectangles:
         canvas.create_rectangle(x1, y1, x2, y2, fill="#D9D9D9", outline="")
 
-    # Create status labels
     status_labels = [
         (144.0, 308.0),
         (522.0, 308.0),
@@ -100,10 +96,8 @@ class Rooms:
     for (x, y) in status_labels:
         canvas.create_text(x, y, anchor="nw", text="Status:", fill="#000000", font=("Inter Bold", 24 * -1))
 
-    # Fetch room data
     room_data = get_rooms()
 
-    # Define positions for room names and statuses
     room_name_positions = [
         (161.0, 154.0),
         (542.0, 154.0),
@@ -122,7 +116,6 @@ class Rooms:
         (997.0, 643.0, 1175.0, 678.0)
     ]
 
-    # Define button positions
     button_positions = [
         (192, 206),
         (571, 206),
@@ -132,9 +125,8 @@ class Rooms:
         (951, 539)
     ]
 
-    # Display room names and statuses
     for i, (room_name, status) in enumerate(room_data):
-        if i < 6:  # Limit to 6 rooms
+        if i < 6:  
             room_name_x, room_name_y = room_name_positions[i]
             status_x1, status_y1, status_x2, status_y2 = status_value_positions[i]
             button_x, button_y = button_positions[i]
@@ -158,7 +150,7 @@ class Rooms:
             )
             
             canvas.create_text(
-                status_x1 + 10,  # Add a bit of padding from the left
+                status_x1 + 10,  
                 status_y1,
                 anchor="nw",
                 text=status,
@@ -166,7 +158,6 @@ class Rooms:
                 font=("Inter Bold", 16)
             )
             
-            # Create buttons
             button_image = PhotoImage(file=relative_to_assets("button_{}.png".format(i+1)))
             button = Button(
                 image=button_image,
@@ -175,7 +166,7 @@ class Rooms:
                 command=lambda s=status: check_status(s),
                 relief="flat"
             )
-            button.image = button_image  # Keep a reference to avoid garbage collection
+            button.image = button_image  
             button.place(x=button_x, y=button_y, width=200, height=30)
 
     window.resizable(False, False)
