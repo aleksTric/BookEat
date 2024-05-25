@@ -10,7 +10,7 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
-class Announcements:
+class Announcement_form:
     def __init__(self, window):
         self.window = window
 

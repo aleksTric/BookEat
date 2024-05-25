@@ -20,7 +20,7 @@ def connect_to_db():
         database="bookeat"
     )
 
-class Rooms:
+class Room_form:
 
     # Συνάρτηση για ενημέρωση της βάσης δεδομένων
     def update_database(members, timer):
