@@ -19,6 +19,10 @@ def connect_to_db():
 
 class Rooms:
 
+    def __init__(self, room_name, status):
+        self.__room_name = room_name
+        self.__status = status
+
     def get_rooms():
         conn = connect_to_db()
         cursor = conn.cursor()

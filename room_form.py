@@ -22,6 +22,12 @@ def connect_to_db():
 
 class Room_form:
 
+
+    def __init__(self, equipment_name, timer, members):
+        self.__equipment_name = equipment_name
+        self.__timer = timer
+        self.__members = members
+
     # Συνάρτηση για ενημέρωση της βάσης δεδομένων
     def update_database(members, timer):
         conn = connect_to_db()

@@ -12,6 +12,7 @@ def relative_to_assets(path: str) -> Path:
 
 class Announcement_form:
     def __init__(self, window):
+
         self.window = window
 
         self.entry_1 = self.create_entry_with_placeholder(136.0, 73.0, 859.0, 63.0, "Enter title")
@@ -157,7 +158,7 @@ canvas.create_rectangle(
     outline=""
 )
 
-announcements = Announcements(window)
+announcements = Announcement_form(window)
 
 canvas.create_text(
     895.0,

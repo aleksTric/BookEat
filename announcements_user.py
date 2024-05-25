@@ -21,6 +21,13 @@ def connect_to_db():
 
 class Announcements:
 
+    def __init__(self, title, date_of_the_event, interested_users, available_seats):
+        self.__title = title
+        self.__date_of_the_event = date_of_the_event
+        self.__interested_users = interested_users
+        self.__available_seats = available_seats
+
+
     def get_events():
         conn = connect_to_db()
         cursor = conn.cursor()

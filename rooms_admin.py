@@ -26,6 +26,13 @@ def connect_to_db():
     
 class Rooms:
 
+
+    def __init__(self, room_name, timer, status):
+        self.__room_name = room_name
+        self.__status = status
+        self.__timer = timer
+
+
     def get_requests():
         connection = connect_to_db()
         if connection:
