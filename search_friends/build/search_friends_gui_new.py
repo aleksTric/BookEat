@@ -131,10 +131,10 @@ class MyApplication:
          self.searchfriend.search(names)
 
 
-    def button_pressed(self, text_item):
-        self.new_friend = Notifications(self.canvas, self.db, self.text_item_user)
+    def button_pressed(self, text_friend):
+        self.new_friend = User(self.canvas, self.db)
         print(f"button clicked!")
-        self.new_friend.send_friend_req(text_item)
+        self.new_friend.send_friend_req(text_friend, self.text_item_user)
 
 if __name__ == "__main__":
      root = tk.Tk()
