@@ -27,6 +27,6 @@ class User:
        notification_type = 'friend request'
 
        friend_notification = Notifications(self.canvas, self.db)
-       friend_notification.create_notification(user_id, friend_id, content, status, notification_type)
+       friend_notification.send_notification(user_id, friend_id, content, status, notification_type)
    
     #def get_user_library():
