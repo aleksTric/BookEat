@@ -30,7 +30,7 @@ class Room_form:
     def update_database(members, timer):
         conn = connect_to_db()
         cursor = conn.cursor()
-        cursor.execute("UPDATE room SET members = %s, timer = %s", (members, timer))
+        cursor.execute("INSERT room SET members = %s, timer = %s", (members, timer))
         conn.commit()
         conn.close()
 
