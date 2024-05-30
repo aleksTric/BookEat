@@ -1,6 +1,6 @@
 import mysql.connector
 from pathlib import Path
-from tkinter import Tk, Canvas, Button, PhotoImage
+from tkinter import Tk, Canvas, Button, PhotoImage, messagebox
 from tkinter import ttk
 
 OUTPUT_PATH = Path(__file__).parent
@@ -90,7 +90,7 @@ class Event:
             image=self.button_image_3,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_3 clicked"),
+            command=self.submit_interest,
             relief="flat"
         )
         self.button_3.place(
@@ -266,6 +266,25 @@ class Event:
     def on_combobox_selected(self, event):
         selected_event = self.category_combobox.get()
         self.update_event_details(selected_event)
+
+    def submit_interest(self):
+        selected_event = self.category_combobox.get()
+        if not selected_event:
+            return
+
+        conn = connect_to_db()
+        cursor = conn.cursor()
+        cursor.execute("""
+            UPDATE event e
+            JOIN announcements a ON e.event_id = a.announcement_id
+            SET e.interested_users = e.interested_users + 1, 
+                e.available_seats = e.available_seats - 1
+            WHERE a.title = %s
+        """, (selected_event,))
+        conn.commit()
+        conn.close()
+        self.update_event_details(selected_event)
+        messagebox.showinfo("Success", "Successfully registered for the event")
 
 if __name__ == "__main__":
     window = Tk()

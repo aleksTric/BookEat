@@ -12,8 +12,36 @@ def relative_to_assets(path: str) -> Path:
 
 class Announcements:
     def __init__(self, window):
-
         self.window = window
+        self.window.geometry("1237x856")
+        self.window.configure(bg="#FFFFFF")
+
+        self.canvas = Canvas(
+            self.window,
+            bg="#FFFFFF",
+            height=856,
+            width=1237,
+            bd=0,
+            highlightthickness=0,
+            relief="ridge"
+        )
+        self.canvas.place(x=0, y=0)
+        self.canvas.create_text(
+            39.0,
+            0.0,
+            anchor="nw",
+            text="Announcement Form",
+            fill="#333333",
+            font=("Italiana Regular", 40 * -1)
+        )
+        self.canvas.create_rectangle(
+            92.0,
+            53.0,
+            1039.0,
+            837.0,
+            fill="#333333",
+            outline=""
+        )
 
         self.entry_1 = self.create_entry_with_placeholder(136.0, 73.0, 859.0, 63.0, "Enter title")
         self.entry_2 = self.create_entry_with_placeholder(186.0, 157.0, 164.0, 59.0, "month")
@@ -26,7 +54,16 @@ class Announcements:
         self.entry_9 = self.create_entry_with_placeholder(847.0, 677.0, 104.0, 80.0, "number of seats")
 
         self.button_1 = self.create_button(313.0, 768.0, 477.0, 62.0, self.insert_announcement_data)
-        self.button_2 = self.create_button(481.0, 769.0, 169.0, 61.0, lambda: print("button_2 clicked"))
+        self.button_2 = self.create_button(481.0, 769.0, 169.0, 61.0, self.insert_announcement_data)  # Changed command to insert_announcement_data
+
+        self.canvas.create_text(
+            895.0,
+            158.0,
+            anchor="nw",
+            text=":",
+            fill="#000000",
+            font=("Inter Medium", 50 * -1)
+        )
 
     def relative_to_assets(self, path: str) -> Path:
         return ASSETS_PATH / Path(path)
@@ -61,7 +98,7 @@ class Announcements:
             fg="#999999",
             bg="#FFFFFF"
         )
-        placeholder_label.place(x=x + 5, y=y + 3)  
+        placeholder_label.place(x=x + 5, y=y + 3)
         entry.bind("<FocusIn>", lambda event: placeholder_label.place_forget())
         entry.bind("<FocusOut>", lambda event: placeholder_label.place(x=x + 5, y=y + 3) if not entry.get() else None)
 
@@ -73,7 +110,9 @@ class Announcements:
             borderwidth=0,
             highlightthickness=0,
             command=command,
-            relief="flat"
+            relief="flat",
+            text="Create",
+            bg="#FFFFFF"
         )
         button.place(x=x, y=y, width=width, height=height)
         return button
@@ -117,7 +156,7 @@ class Announcements:
             messagebox.showinfo("Success", "Announcement data inserted successfully")
         except Error as e:
             print(f"Error: {e}")
-            messagebox.showerror("Error", f"Failed to insert data into the database: {e}")
+            messagebox.showerror("Error", "Failed to insert data into the database: {e}")
         finally:
             if cursor:
                 cursor.close()
@@ -126,47 +165,6 @@ class Announcements:
 
 
 window = Tk()
-window.geometry("1237x856")
-window.configure(bg="#FFFFFF")
-
-canvas = Canvas(
-    window,
-    bg="#FFFFFF",
-    height=856,
-    width=1237,
-    bd=0,
-    highlightthickness=0,
-    relief="ridge"
-)
-canvas.place(x=0, y=0)
-canvas.create_text(
-    39.0,
-    0.0,
-    anchor="nw",
-    text="Announcement Form",
-    fill="#333333",
-    font=("Italiana Regular", 40 * -1)
-)
-canvas.create_rectangle(
-    92.0,
-    53.0,
-    1039.0,
-    837.0,
-    fill="#333333",
-    outline=""
-)
-
 announcements = Announcements(window)
-
-canvas.create_text(
-    895.0,
-    158.0,
-    anchor="nw",
-    text=":",
-    fill="#000000",
-    font=("Inter Medium", 50 * -1)
-)
-
 window.resizable(False, False)
 window.mainloop()
-
