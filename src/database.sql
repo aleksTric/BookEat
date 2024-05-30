@@ -53,6 +53,19 @@ CREATE TABLE IF NOT EXISTS requested_books (
   CONSTRAINT reqbooks_fk_user_id FOREIGN KEY (user_id) REFERENCES account (user_id)
 );
 
+CREATE TABLE wishlist(
+user_id INT NOT NULL,
+book_id INT NOT NULL
+);
+CREATE TABLE favourites(
+user_id INT NOT NULL,
+book_id INT NOT NULL
+);
+CREATE TABLE recommendedBooks (
+user_id INT NOT NULL,
+book_id INT NOT NULL
+);
+
 -- Inserting sample users
 INSERT INTO account (email, username, password, user_type) VALUES ('user1@example.com', 'user1', 'user1', 'user');
 

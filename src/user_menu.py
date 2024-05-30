@@ -93,6 +93,7 @@ def display_friends_content():
 def display_library_content():
     print("Library content displayed")
     toggle_button_image(button_4)
+    subprocess.Popen(["python3", "search_friends/build/users_library.py"])
 
 def display_study_rooms_content():
     print("Study Rooms content displayed")
