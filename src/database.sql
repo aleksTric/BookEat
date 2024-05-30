@@ -66,6 +66,43 @@ user_id INT NOT NULL,
 book_id INT NOT NULL
 );
 
+CREATE TABLE rooms
+ (
+    room_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    room_name VARCHAR(255),
+    status VARCHAR(50)
+ );
+
+CREATE TABLE announcements (
+  announcement_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  title varchar(45) NOT NULL,
+  texting text(255) NOT NULL
+);
+
+CREATE TABLE event (
+  event_id INT NOT NULL,
+  date_hour datetime,
+  location varchar(45),
+  available_seats INT,
+  interested_users INT,
+  FOREIGN KEY (event_id) REFERENCES announcements(announcement_id)
+);
+
+CREATE TABLE requests
+ (
+    request_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    members INT(5),
+    timer INT(3),
+    FOREIGN KEY (request_id) REFERENCES rooms(room_id)
+ );
+
+CREATE TABLE equipment (
+  equipment_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  request_id INT,
+  equipment_name VARCHAR(255) NOT NULL,
+  FOREIGN KEY (request_id) REFERENCES requests(request_id)
+);
+
 -- Inserting sample users
 INSERT INTO account (email, username, password, user_type) VALUES ('user1@example.com', 'user1', 'user1', 'user');
 
@@ -91,3 +128,12 @@ INSERT INTO warehouse (id_book, quantity) VALUES ((SELECT book_id FROM books WHE
 INSERT INTO warehouse (id_book, quantity) VALUES ((SELECT book_id FROM books WHERE title = 'The Great Gatsby' LIMIT 1), 10);
 INSERT INTO warehouse (id_book, quantity) VALUES ((SELECT book_id FROM books WHERE title = 'To the Lighthouse' LIMIT 1), 5);
 INSERT INTO warehouse (id_book, quantity) VALUES ((SELECT book_id FROM books WHERE title = 'Moby-Dick' LIMIT 1), 25);
+
+INSERT INTO rooms(room_name, status) VALUES ('Dexameni Project', 'available'); 
+
+INSERT INTO requests(members, timer) VALUE ('2', '2');
+
+
+INSERT INTO equipment( request_id, equipment_name) VALUES ('1','laptop');
+INSERT INTO equipment( request_id, equipment_name) VALUES ('1','board');
+INSERT INTO equipment(request_id, equipment_name) VALUES ('1','pens');

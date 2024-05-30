@@ -103,6 +103,8 @@ def display_library_content():
 def display_study_rooms_content():
     print("Study Rooms content displayed")
     toggle_button_image(button_5)
+    subprocess.Popen(["python3", "rooms_admin.py"])
+
 
 def display_book_requests_content():
     print("Book Requests content displayed")
@@ -249,7 +251,7 @@ image_image_1 = PhotoImage(file=relative_to_assets("image_1.png"))
 # Place the image at the center and above all buttons
 image_1 = canvas.create_image(
     400.0,  # Adjusted X-coordinate to place at the center horizontally
-    50.0,  # Adjusted Y-coordinate to place at the center vertically
+    55.0,  # Adjusted Y-coordinate to place at the center vertically
     image=image_image_1
 )
 
@@ -261,6 +263,7 @@ button_4.place(relx=0.5, rely=0.55, anchor="center")  # Adjusted Y-coordinate fo
 button_5.place(relx=0.5, rely=0.65, anchor="center")  # Adjusted Y-coordinate for button_5
 button_6.place(relx=0.5, rely=0.75, anchor="center")  # Adjusted Y-coordinate for button_5
 button_7.place(relx=0.5, rely=0.85, anchor="center")  # Adjusted Y-coordinate for button_7
+
 button_8.place(relx=0.5, rely=0.95, anchor="center")  # Adjusted Y-coordinate for button_8
 
 

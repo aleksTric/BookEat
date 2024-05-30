@@ -14,8 +14,8 @@ class Categories:
         try:
             conn = mysql.connector.connect(
             host="127.0.0.1",
-            user="kostas",
-            password="kostas1234",
+            user="root",
+            password="root",
             database="bookeat"
             )
         
@@ -40,8 +40,8 @@ class Categories:
         try:
             conn = mysql.connector.connect(
             host="127.0.0.1",
-            user="kostas",
-            password="kostas1234",
+            user="root",
+            password="root",
             database="bookeat"
             )
         

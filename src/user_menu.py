@@ -98,6 +98,8 @@ def display_library_content():
 def display_study_rooms_content():
     print("Study Rooms content displayed")
     toggle_button_image(button_5)
+    subprocess.Popen(["python3", "rooms_user.py"])
+
 
 def display_notifications_content():
     print("Notifications content displayed")
