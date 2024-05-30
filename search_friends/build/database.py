@@ -17,6 +17,8 @@ class Database:
                 password=self.password,
                 database=self.database
             )
+            if self.conn.is_connected():
+                print("successfully connected to database")
             return self.conn
         except mysql.connector.Error as err:
             messagebox.showerror("Error", f"Failed to connect to database: {err}")
@@ -26,10 +28,19 @@ class Database:
         if self.conn:
             self.conn.close()
 
+    def commit_query(self):
+        if not self.conn:
+            self.connect_to_database()
+            if not self.conn:
+                return None
+        if self.conn:
+            self.conn.commit()
+
     def execute_query(self, query, params=None):
         try:
             cursor = self.conn.cursor()
             cursor.execute(query, params)
+            
             return cursor
         except mysql.connector.Error as err:
             messagebox.showerror("Error", f"Failed to execute query: {err}")
