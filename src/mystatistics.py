@@ -1,3 +1,4 @@
+import mysql.connector
 
 class Statistics:
 
@@ -13,4 +14,29 @@ class Statistics:
         pass
 
     def get_requested_books():
-        pass
+       
+        try:
+            conn = mysql.connector.connect(
+                host="127.0.0.1",
+                user="root",
+                password="",
+                database="bookeat"
+            )
+
+            cursor = conn.cursor(dictionary=True)
+
+            query ="SELECT title,
+            
+            params = [f"%{categ}%"]
+            cursor.execute(query, params)
+            books = cursor.fetchall()
+            
+
+        except mysql.connector.Error as error:
+            print("Failed to fetch books:", error)
+        finally:
+            if conn.is_connected():
+                cursor.close()
+                conn.close()
+                
+        return books
