@@ -3,7 +3,7 @@ from tkinter import Tk, Canvas, Button, Entry, PhotoImage, Toplevel, Label, Scro
 from pathlib import Path
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/kostaskaplanis/Desktop/build/assets/home")
+ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/kostaskaplanis/Desktop/Bookeat/src/assets/home")
 
 def logout():
     confirm_window = Toplevel(window)
@@ -109,6 +109,9 @@ def display_notifications_content():
 
 def display_announcements_content():
     print("Announcements content displayed")
+    toggle_button_image(button_7)
+    subprocess.Popen(["python3", "announcements_user.py"])
+
 
 window = Tk()
 window.title('Menu')
@@ -183,6 +186,17 @@ button_6 = Button(
 )
 button_6.place(relx=0.5, rely=0.6, anchor="center")  # Center the button vertically
 
+button_image_7 = PhotoImage(file=relative_to_assets("announcements-normal.png"))
+button_7 = Button(
+    canvas,
+    image=button_image_7,
+    borderwidth=0,
+    highlightthickness=0,
+    command=display_announcements_content,
+    relief="flat"
+)
+button_7.place(relx=0.5, rely=0.6, anchor="center")  # Center the button vertically
+
 button_image_8 = PhotoImage(file=relative_to_assets("button_8.png"))
 button_8 = Button(
     canvas,
@@ -208,7 +222,8 @@ button_3.place(relx=0.5, rely=0.45, anchor="center")  # Adjusted Y-coordinate fo
 button_4.place(relx=0.5, rely=0.55, anchor="center")  # Adjusted Y-coordinate for button_4
 button_5.place(relx=0.5, rely=0.65, anchor="center")  # Adjusted Y-coordinate for button_5
 button_6.place(relx=0.5, rely=0.75, anchor="center")  # Adjusted Y-coordinate for button_6
-button_8.place(relx=0.5, rely=0.85, anchor="center")  # Adjusted Y-coordinate for button_8
+button_7.place(relx=0.5, rely=0.85, anchor="center")  # Adjusted Y-coordinate for button_7
+button_8.place(relx=0.5, rely=0.95, anchor="center")  # Adjusted Y-coordinate for button_8
 
 
 # Dictionary to store button images and their corresponding alternate images
@@ -218,6 +233,7 @@ button_images = {
     button_4: {"normal": PhotoImage(file=relative_to_assets("my_library_normal.png")), "white": PhotoImage(file=relative_to_assets("my_library_white.png"))},
     button_5: {"normal": PhotoImage(file=relative_to_assets("study_rooms_normal.png")), "white": PhotoImage(file=relative_to_assets("study_rooms_white.png"))},
     button_6: {"normal": PhotoImage(file=relative_to_assets("notifications_normal.png")), "white": PhotoImage(file=relative_to_assets("notifications_white.png"))},
+    button_7: {"normal": PhotoImage(file=relative_to_assets("announcements-normal.png")), "white": PhotoImage(file=relative_to_assets("announcements-white.png"))},
 }
 # Define a function to toggle button images
 def toggle_button_image(button):
