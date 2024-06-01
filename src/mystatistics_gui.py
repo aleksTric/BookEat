@@ -1,13 +1,9 @@
-
 import tkinter as tk
 from tkinter import ttk, messagebox
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import pandas as pd
 from mystatistics import Statistics
-
-
-          
 
 # Create a pie chart from the data
 def create_pie_chart(data):
@@ -24,6 +20,7 @@ class BookStatisticsApp:
         self.root = root
         self.root.title("Top Requested Books")
         self.stats = Statistics()
+        
         # Create a frame to hold the plot
         self.plot_frame = ttk.Frame(root)
         self.plot_frame.pack(fill=tk.BOTH, expand=True)
@@ -51,5 +48,5 @@ class BookStatisticsApp:
 if __name__ == "__main__":
     root = tk.Tk()
     app = BookStatisticsApp(root)
-    root.geometry("800x600")
+    root.geometry("1237x856")
     root.mainloop()
