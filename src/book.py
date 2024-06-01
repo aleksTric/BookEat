@@ -28,13 +28,10 @@ class Books(Categories):
             conn = mysql.connector.connect(
             host="127.0.0.1",
             user="root",
-            password="",
+            password="root",
             database="bookeat"
             )
-        
             cursor = conn.cursor()
-
-           
             query = "SELECT COUNT(*) FROM books WHERE title= %s"
             cursor.execute(query, (title,))
             book_count = cursor.fetchone()[0]

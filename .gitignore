@@ -1,0 +1,8 @@
+# Ignore macOS metadata files
+.DS_Store
+
+# Ignore the virtual environment directory
+venv/
+
+
+__pycache__/

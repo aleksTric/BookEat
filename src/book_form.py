@@ -1,6 +1,6 @@
 from book import Books
 import tkinter.messagebox
-import mysql.connector
+import mysql.connector # type: ignore
 from categories import Categories
 import json
 

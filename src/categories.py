@@ -15,7 +15,7 @@ class Categories:
             conn = mysql.connector.connect(
             host="127.0.0.1",
             user="root",
-            password="",
+            password="root",
             database="bookeat"
             )
         
@@ -41,7 +41,7 @@ class Categories:
             conn = mysql.connector.connect(
             host="127.0.0.1",
             user="root",
-            password="",
+            password="root",
             database="bookeat"
             )
         
