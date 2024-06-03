@@ -34,7 +34,7 @@ class Wishlist():
                 if info:
                   book_titles[i] = info[0]
             for title in book_titles:
-                print(f"Books from get_favourites:",  title)
+                print(f"Books from get_wishlist:",  title)
             return book_titles
         else:
             return 0
@@ -50,7 +50,6 @@ class Wishlist():
                         return 0 
         else:
             print("no books in wishlist from the is_on_wishlist")
-            #messagebox.showinfo("Not in favourites", "The book can be added to favourites")
             return 0
             
             

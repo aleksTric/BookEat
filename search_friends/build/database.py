@@ -35,6 +35,7 @@ class Database:
                 return None
         if self.conn:
             self.conn.commit()
+            return 1
 
     def execute_query(self, query, params=None):
         try:

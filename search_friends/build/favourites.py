@@ -50,7 +50,7 @@ class Favourites():
         if books:
             for i in range(len(books)):
                     if book_title==books[i]:
-                        messagebox.showinfo("NOTE", "Book is already in favourites")
+                        messagebox.showinfo("NOTE", "Book is in favourites")
                         return book_title
                     else:
                         print("this book is not in favourites")
