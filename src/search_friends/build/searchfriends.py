@@ -3,15 +3,15 @@ from database import Database
 from user import User
 
 class SearchFriends:
-     def __init__(self, canvas, db, text_item0, text_item1, text_item2, text_item3, text_item4, text_item5):
+     def __init__(self, canvas, db, text0, text1, text2, text3, text4, text5):
          self.canvas = canvas
          self.db = db
-         self.text0 = text_item0
-         self.text1 = text_item1
-         self.text2 = text_item2
-         self.text3 = text_item3
-         self.text4 = text_item4
-         self.text5 = text_item5
+         self.text0 = text0
+         self.text1 = text1
+         self.text2 = text2
+         self.text3 = text3
+         self.text4 = text4
+         self.text5 = text5
 
      def get_by_username(self, search_term):
           query = "SELECT username FROM account WHERE username LIKE %s"

@@ -4,7 +4,7 @@ import mysql.connector
 from mysql.connector import Error
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"Users/kostaskaplanis/Desktop/Bookeat/assets_announcement_form/frame0")
+ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\panek\OneDrive\Υπολογιστής\LIBRARY\assets_announcement_form\frame0")
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)

@@ -5,7 +5,7 @@ from tkinter import ttk  # Import ttk for the combobox
 
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"assets_rooms_admin/frame0")
+ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\panek\OneDrive\Υπολογιστής\LIBRARY\assets_rooms_admin\frame0")
 
 
 

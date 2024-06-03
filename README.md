@@ -1,6 +1,6 @@
 # BookEAT :books:
 
-Version: `v-0.1`
+Version: `v-1.0`
 
 <p align="center">
 <img width="300" style="border-radius:15% " alt="BookEat Logo" src="./bookeat_github_logo.png" />
@@ -58,9 +58,9 @@ Panagiota Alexandra Tricha was responsible for the **Library Organization User, 
 
 ## :coffee: Team Members :coffee:
 
-| Full Name                 | ID      | Email                   | Github                                        |
-| ------------------------- | ------- | ----------------------- | --------------------------------------------- |
-| Panagiota Alexandra Tricha| 1072486 | ac1072486@ac.upatras.gr | [Link](https://github.com/aleksTric)          |
-| Dimitris Mparoutis        | 1084549 | ac1084549@ac.upatras.gr | [Link](https://github.com/jimbaroutis)        |
-| Konstantinos Tsiligiannis | 1084642 | ac1084642@ac.upatras.gr | [Link](https://github.com/KostasTsiligiannis) |
-| Kostantinos Kaplanis      | 1080447 | ac1080447@ac.upatras.gr | [Link](https://github.com/kostaskaplanis2001) |
+| Full Name                  | ID      | Email                   | Github                                        |
+| -------------------------- | ------- | ----------------------- | --------------------------------------------- |
+| Panagiota Alexandra Tricha | 1072486 | ac1072486@ac.upatras.gr | [Link](https://github.com/aleksTric)          |
+| Dimitris Mparoutis         | 1084549 | ac1084549@ac.upatras.gr | [Link](https://github.com/jimbaroutis)        |
+| Konstantinos Tsiligiannis  | 1084642 | ac1084642@ac.upatras.gr | [Link](https://github.com/KostasTsiligiannis) |
+| Kostantinos Kaplanis       | 1080447 | ac1080447@ac.upatras.gr | [Link](https://github.com/kostaskaplanis2001) |

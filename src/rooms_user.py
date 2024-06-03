@@ -4,7 +4,7 @@ from tkinter import Tk, Canvas, Button, PhotoImage, messagebox
 import subprocess
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"assets_rooms_user/frame0")
+ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\panek\OneDrive\Υπολογιστής\LIBRARY\assets_rooms_user\frame0")
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
@@ -160,7 +160,7 @@ class Rooms:
         return rooms_data
 
     def check_status(self, status):
-        if status == "available":
+        if status == "Available":
             subprocess.run(["python", "room_form.py"])
         else:
             messagebox.showinfo("Room Not Available", "This room is not available.")

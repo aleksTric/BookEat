@@ -16,10 +16,11 @@ from bookdetails import BookDetails
 from user import User 
 from favourites import Favourites
 from wishlist import Wishlist
+from mylibrary import MyLibrary
 
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"Users/kostaskaplanis/Desktop/src/search_friends/build/assets/frame0")
+ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\Aleks\Desktop\Tkinter-Designer-master\build\assets\frame0")
 
 
 def relative_to_assets(path: str) -> Path:
@@ -27,7 +28,7 @@ def relative_to_assets(path: str) -> Path:
 
 class MyApplication:
     def __init__(self, root):
-        self.db = Database("localhost", "root", "root", "bookeat")
+        self.db = Database("localhost", "root", "abbe8ccf9d", "bookeat")
         self.conn = self.db.connect_to_database()
         self.window = root
         self.window.geometry("1237x856")
@@ -44,7 +45,9 @@ class MyApplication:
         self.canvas.create_rectangle( 816.0, 9.0, 1176.0, 109.0, fill="#FFFFFF", outline="")
         self.text_user = self.canvas.create_text( 842.0, 22.0, anchor="nw", text="Kostas", fill="#000000", font=("Inter Medium", 25 * -1))
         self.user = User(self.canvas, self.db)
-        self.user_id = self.user.is_user(self.text_user)
+        username = self.canvas.itemcget(self.text_user, "text")
+        str_username = str(username)
+        self.user_id = self.user.is_user(str_username)
 
         self.canvas.create_rectangle( 832.0, 65.0, 1052.0, 75.0, fill="#000000", outline="")
         self.canvas.create_rectangle( 36.0, 137.0, 1201.0, 830.0, fill="#FFFFFF", outline="")
@@ -119,7 +122,6 @@ class MyApplication:
         self.wish_books = []
         self.wish_books=self.wishlist.get_wishlist()
 
-        #SWSTO MIA XARA
         if self.wish_books:
              for i in range(len(self.wish_books)):
                 print(f"these are the WISHES:", self.wish_books[i])
