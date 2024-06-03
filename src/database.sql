@@ -57,13 +57,34 @@ CREATE TABLE wishlist(
 user_id INT NOT NULL,
 book_id INT NOT NULL
 );
+
 CREATE TABLE favourites(
 user_id INT NOT NULL,
 book_id INT NOT NULL
 );
+
 CREATE TABLE recommendedBooks (
 user_id INT NOT NULL,
 book_id INT NOT NULL
+);
+
+CREATE TABLE friendslist (
+sender_id INT NOT NULL,
+receiver_id INT NOT NULL,
+status VARCHAR(50)
+);
+
+CREATE TABLE notifications (
+  notification_id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  friend_id INT NOT NULL,
+  content VARCHAR(250) DEFAULT NULL,
+  timestamp DATETIME DEFAULT NULL,
+  status VARCHAR(45) DEFAULT NULL,
+  notification_type VARCHAR(45) DEFAULT NULL,
+  PRIMARY KEY (notification_id),
+  FOREIGN KEY (user_id) REFERENCES account(user_id),
+  FOREIGN KEY (friend_id) REFERENCES account(friend_id)
 );
 
 CREATE TABLE rooms
@@ -106,6 +127,13 @@ CREATE TABLE equipment (
 -- Inserting sample users
 INSERT INTO account (email, username, password, user_type) VALUES ('user1@example.com', 'user1', 'user1', 'user');
 
+INSERT INTO account(email, username, password) VALUES ('kostas@gmail.com', 'Kostas', '1234');
+INSERT INTO account(email, username, password) VALUES ('alexandra@gmail.com', 'Alexandra', '1234');
+INSERT INTO account(email, username, password) VALUES ('dimitris@gmail.com', 'Dimitris', '1234');
+INSERT INTO account(email, username, password) VALUES ('kwstas@gmail.com', 'Kwstas', '1234');
+INSERT INTO account(email, username, password) VALUES ('maira@gmail.com', 'Maira', '1234');
+INSERT INTO account(email, username, password) VALUES ('eleni@gmail.com', 'Eleni', '1234');
+
 -- Inserting sample categories
 INSERT INTO categories (category_name ) VALUES ('Classic' );
 INSERT INTO categories (category_name ) VALUES ('Dystopian');
@@ -133,7 +161,9 @@ INSERT INTO rooms(room_name, status) VALUES ('Dexameni Project', 'available');
 
 INSERT INTO requests(members, timer) VALUE ('2', '2');
 
-
+--Inserting sample data for recommended books
+INSERT INTO recommendedbooks VALUES (1, 1), (1,2), (1,3), (1,4), (1,5);
+  
 INSERT INTO equipment( request_id, equipment_name) VALUES ('1','laptop');
 INSERT INTO equipment( request_id, equipment_name) VALUES ('1','board');
 INSERT INTO equipment(request_id, equipment_name) VALUES ('1','pens');
