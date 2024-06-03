@@ -40,9 +40,7 @@ class MyApplication:
 
         self.canvas.place(x = 0, y = 0)
         self.create_ui()
-        self.db.retrieve_data(self.canvas, self.db, self.text_item0, self.text_item1, self.text_item2, self.text_item3,self.text_item4,self.text_item5)
-        self.searchfriend = SearchFriends(self.canvas, self.db, self.text_item0, self.text_item1, self.text_item2,
-                                          self.text_item3, self.text_item4, self.text_item5)
+        self.searchfriend = SearchFriends(self.canvas, self.db, self.friend0, self.friend1, self.friend2, self.friend3, self.friend4, self.friend5)
         self.current_user = User(self.canvas, self.db)
         
 
@@ -69,27 +67,45 @@ class MyApplication:
 
        #logged in user 
        self.text_item_user = self.canvas.create_text( 876.0, 22.0, anchor="nw", text="Alexandra", fill="#000000", font=("Inter Medium", 25 * -1))
-       
+       self.user_name = self.canvas.itemcget(self.text_item_user, 'text')
        # friend user
        self.friend_user = User(self.canvas, self.db)
 
        self.canvas.create_rectangle( 881.0, 65.0, 1101.0, 75.0, fill="#000000", outline="")
-
-       
-       self.canvas.create_rectangle( 406.0, 202.0, 479.0, 275.0, fill="#FFFFFF", outline="")
-       self.canvas.create_rectangle( 699.0, 202.0, 772.0, 275.0, fill="#FFFFFF", outline="")
-       self.canvas.create_rectangle( 1009.0, 202.0, 1082.0, 275.0, fill="#FFFFFF", outline="")
-       self.canvas.create_rectangle( 1012.0, 481.0, 1085.0, 554.0, fill="#FFFFFF", outline="")
-       self.canvas.create_rectangle( 703.0, 481.0, 776.0, 554.0, fill="#FFFFFF", outline="")
-       self.canvas.create_rectangle( 406.0, 481.0, 479.0, 554.0, fill="#FFFFFF", outline="")
-       
-       #TEXT_ITEMS that show friends in the main page
-       self.text_item0 = self.canvas.create_text( 260.0, 210.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
-       self.text_item1 = self.canvas.create_text( 560.0, 210.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
-       self.text_item2 = self.canvas.create_text( 860.0, 210.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
-       self.text_item3 = self.canvas.create_text( 260.0, 489.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
-       self.text_item4 = self.canvas.create_text( 560.0, 489.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
-       self.text_item5 = self.canvas.create_text( 860.0, 489.0, anchor="nw", text="-", fill="#000000", font=("Inter", 30 * -1))
+       self.canvas.create_text( 200.0, 100.0, anchor="nw", text="Suggested Friends", fill="#000000", font=("Inter", 30 * -1))
+       self.user_friends = self.get_users()
+       if self.user_friends:
+           for i in range(len(self.user_friends)):
+               if i==0:
+                   self.canvas.create_rectangle( 406.0, 202.0, 479.0, 275.0, fill="#FFFFFF", outline="")   
+                   self.friend0=self.canvas.create_text( 260.0, 210.0, anchor="nw", text=self.user_friends[0], fill="#000000", font=("Inter", 30 * -1))
+                   self.button_1 = Button(text ="ADD FRIEND",borderwidth=0,highlightthickness=0,command=lambda: self.button_pressed(self.user_friends[0],self.user_name),relief="flat")
+                   self.button_1.place( x=292.0, y=341.0, width=142.0, height=44.0)
+               if i==1:
+                   self.canvas.create_rectangle( 699.0, 202.0, 772.0, 275.0, fill="#FFFFFF", outline="")
+                   self.friend1=self.canvas.create_text( 560.0, 210.0, anchor="nw", text=self.user_friends[1], fill="#000000", font=("Inter", 30 * -1))
+                   self.button_2 = Button( text = "ADD FRIEND", borderwidth=0, highlightthickness=0, command=lambda: self.button_pressed(self.user_friends[1],self.user_name), relief="flat")
+                   self.button_2.place( x=609.0, y=341.0, width=131.0, height=44.0)
+               if i==2:
+                   self.canvas.create_rectangle( 1009.0, 202.0, 1082.0, 275.0, fill="#FFFFFF", outline="")
+                   self.friend2=self.canvas.create_text( 860.0, 210.0, anchor="nw", text=self.user_friends[2], fill="#000000", font=("Inter", 30 * -1))
+                   self.button_3 = Button(text = "ADD FRIEND",borderwidth=0,highlightthickness=0,command=lambda: self.button_pressed(self.user_friends[2],self.user_name),relief="flat")
+                   self.button_3.place( x=909.0, y=338.0, width=131.0, height=47.0)
+               if i==3:
+                   self.canvas.create_rectangle( 406.0, 481.0, 479.0, 554.0, fill="#FFFFFF", outline="")
+                   self.friend3=self.canvas.create_text( 860.0, 489.0, anchor="nw", text=self.user_friends[3], fill="#000000", font=("Inter", 30 * -1))
+                   self.button_6 = Button( text = "ADD FRIEND", borderwidth=0, highlightthickness=0, command=lambda: self.button_pressed(self.user_friends[3],self.user_name), relief="flat")
+                   self.button_6.place( x=303.0, y=596.0, width=131.0, height=47.0)
+               if i==4:
+                   self.canvas.create_rectangle( 703.0, 481.0, 776.0, 554.0, fill="#FFFFFF", outline="")
+                   self.friend4=self.canvas.create_text( 560.0, 489.0, anchor="nw", text=self.user_friends[4], fill="#000000", font=("Inter", 30 * -1))
+                   self.button_5 = Button(text="ADD FRIEND",borderwidth=0,highlightthickness=0,command=lambda: self.button_pressed(self.user_friends[4],self.user_name),relief="flat")
+                   self.button_5.place( x=609.0, y=596.0, width=123.0, height=47.0)
+               if i==5:
+                   self.canvas.create_rectangle( 1012.0, 481.0, 1085.0, 554.0, fill="#FFFFFF", outline="")
+                   self.friend5=self.canvas.create_text( 260.0, 489.0, anchor="nw", text=self.user_friends[5], fill="#000000", font=("Inter", 30 * -1))
+                   self.button_4 = Button( text = "ADD FRIEND", borderwidth=0, highlightthickness=0, command=lambda: self.button_pressed(self.user_friends[5], self.user_name), relief="flat")
+                   self.button_4.place(x=909.0,y=596.0,width=131.0,height=47.0)
        
        #SEARCH
        entry_image_1 = PhotoImage(file=relative_to_assets("entry_1.png"))
@@ -99,43 +115,28 @@ class MyApplication:
        self.search_entry.bind("<KeyRelease>", self.searching)
        self.search_entry.place(x=484.0,y=18.0,width=202.0,height=52.0)
 
-       #BUTTONS
-       #self.button_image_1 = PhotoImage(file=relative_to_assets("button_1.png"))
-       self.button_1 = Button(text ="ADD FRIEND",borderwidth=0,highlightthickness=0,command=lambda: self.button_pressed(self.text_item0),relief="flat")
-       self.button_1.place( x=292.0, y=341.0, width=142.0, height=44.0)
-
-       #self.button_image_2 = PhotoImage(file=relative_to_assets("button_2.png"))
-       self.button_2 = Button( text = "ADD FRIEND", borderwidth=0, highlightthickness=0, command=lambda: self.button_pressed(self.text_item1), relief="flat")
-       self.button_2.place( x=609.0, y=341.0, width=131.0, height=44.0)
-
-       #self.button_image_3 = PhotoImage( file=relative_to_assets("button_3.png"))
-       self.button_3 = Button(text = "ADD FRIEND",borderwidth=0,highlightthickness=0,command=lambda: self.button_pressed(self.text_item2),relief="flat")
-       self.button_3.place( x=909.0, y=338.0, width=131.0, height=47.0)
-
-       #self.button_image_4 = PhotoImage( file=relative_to_assets("button_4.png"))
-       self.button_4 = Button( text = "ADD FRIEND", borderwidth=0, highlightthickness=0, command=lambda: self.button_pressed(self.text_item5), relief="flat")
-       self.button_4.place(x=909.0,y=596.0,width=131.0,height=47.0)
-
-       #self.button_image_5 = PhotoImage(file=relative_to_assets("button_5.png"))
-       self.button_5 = Button(text="ADD FRIEND",borderwidth=0,highlightthickness=0,command=lambda: self.button_pressed(self.text_item4),relief="flat")
-       self.button_5.place( x=609.0, y=596.0, width=123.0, height=47.0)
-
-       #self.button_image_6 = PhotoImage(file=relative_to_assets("button_6.png"))
-       self.button_6 = Button( text = "ADD FRIEND", borderwidth=0, highlightthickness=0, command=lambda: self.button_pressed(self.text_item3), relief="flat")
-       self.button_6.place( x=303.0, y=596.0, width=131.0, height=47.0)
-
    
     def searching(self, event):
          search_term = event.widget.get()
          names = self.searchfriend.get_by_username(search_term)
          self.searchfriend.search(names)
 
-
-    def button_pressed(self, text_friend):
+    def button_pressed(self, friend_name, user_name):
         self.new_friend = User(self.canvas, self.db)
         print(f"button clicked!")
-        self.new_friend.send_friend_req(text_friend, self.text_item_user)
+        self.new_friend.send_friend_req(friend_name, user_name)
 
+    def get_users(self):
+        query = "SELECT (username) FROM account"
+        cursor = self.db.execute_query(query)
+        friends = cursor.fetchall()
+        if friends:
+            friends_names = [None]*len(friends)
+            for i in range(len(friends)):
+                friends_names[i]=friends[i][0]
+        print("friends:", friends_names)
+        return friends_names
+    
 if __name__ == "__main__":
      root = tk.Tk()
      app = MyApplication(root)
